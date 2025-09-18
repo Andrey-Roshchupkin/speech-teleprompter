@@ -24,9 +24,7 @@ class LocalStorageManager {
         return settings;
       }
     } catch (error) {
-      this.debugLogger.info(
-        '❌ Error loading settings from local storage: ' + error.message
-      );
+      this.debugLogger.info('❌ Error loading settings from local storage: ' + error.message);
     }
     return this.getDefaultSettings();
   }
@@ -42,7 +40,6 @@ class LocalStorageManager {
       scrollTrigger: 3,
       textSize: 24,
       primaryLanguage: 'en-US',
-      secondaryLanguage: '',
     };
   }
 
@@ -75,7 +72,6 @@ class LocalStorageManager {
         ),
         textSize: parseInt(settings.textSize) || 24,
         primaryLanguage: settings.primaryLanguage || 'en-US',
-        secondaryLanguage: settings.secondaryLanguage || '',
         lastSaved: new Date().toISOString(),
       };
 
@@ -85,9 +81,7 @@ class LocalStorageManager {
       // Show visual indicator
       this.showSaveIndicator();
     } catch (error) {
-      this.debugLogger.info(
-        '❌ Error saving settings to local storage: ' + error.message
-      );
+      this.debugLogger.info('❌ Error saving settings to local storage: ' + error.message);
     }
   }
 
@@ -156,9 +150,7 @@ class LocalStorageManager {
     try {
       return localStorage.getItem(this.storageKey) !== null;
     } catch (error) {
-      this.debugLogger.info(
-        '❌ Error checking for saved settings: ' + error.message
-      );
+      this.debugLogger.info('❌ Error checking for saved settings: ' + error.message);
       return false;
     }
   }
@@ -174,9 +166,7 @@ class LocalStorageManager {
         return settings.lastSaved ? new Date(settings.lastSaved) : null;
       }
     } catch (error) {
-      this.debugLogger.info(
-        '❌ Error getting last saved time: ' + error.message
-      );
+      this.debugLogger.info('❌ Error getting last saved time: ' + error.message);
     }
     return null;
   }
