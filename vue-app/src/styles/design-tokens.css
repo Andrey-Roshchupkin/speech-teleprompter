@@ -1,0 +1,264 @@
+/**
+ * Design Tokens for Speech Teleprompter
+ * Centralized color palette and design system variables
+ * Based on the original project's brand colors
+ */
+
+:root {
+  /* ============================================================================
+     Primary Brand Colors
+     ============================================================================ */
+
+  /* Primary Gradient Colors */
+  --primary-gradient-start: #667eea;
+  --primary-gradient-end: #764ba2;
+  --primary-color: #667eea;
+  --primary-light: rgba(102, 126, 234, 0.1);
+  --primary-medium: rgba(102, 126, 234, 0.3);
+  --primary-dark: #5a6fd8;
+
+  /* Secondary Colors */
+  --secondary-color: #764ba2;
+  --secondary-light: rgba(118, 75, 162, 0.1);
+  --secondary-dark: #6a4190;
+
+  /* ============================================================================
+     Semantic Colors
+     ============================================================================ */
+
+  /* Success Colors */
+  --success-color: #28a745;
+  --success-light: #20c997;
+  --success-dark: #1e7e34;
+  --success-bg: rgba(40, 167, 69, 0.1);
+  --success-border: rgba(40, 167, 69, 0.3);
+  --success-text: #155724;
+
+  /* Danger Colors */
+  --danger-color: #dc3545;
+  --danger-light: #e74c3c;
+  --danger-dark: #c82333;
+  --danger-bg: rgba(220, 53, 69, 0.1);
+  --danger-border: rgba(220, 53, 69, 0.3);
+  --danger-text: #721c24;
+
+  /* Warning Colors */
+  --warning-color: #ffc107;
+  --warning-light: #ffca2c;
+  --warning-dark: #e0a800;
+  --warning-bg: rgba(255, 193, 7, 0.1);
+  --warning-border: rgba(255, 193, 7, 0.3);
+  --warning-text: #856404;
+
+  /* Info Colors */
+  --info-color: #17a2b8;
+  --info-light: #20c997;
+  --info-dark: #138496;
+  --info-bg: rgba(23, 162, 184, 0.1);
+  --info-border: rgba(23, 162, 184, 0.3);
+  --info-text: #0c5460;
+
+  /* Neutral Colors */
+  --neutral-color: #6c757d;
+  --neutral-light: #495057;
+  --neutral-dark: #343a40;
+  --neutral-bg: rgba(108, 117, 125, 0.1);
+  --neutral-border: rgba(108, 117, 125, 0.3);
+  --neutral-text: #495057;
+
+  /* ============================================================================
+     Background Colors
+     ============================================================================ */
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --bg-quaternary: #dee2e6;
+  --bg-gradient: linear-gradient(
+    135deg,
+    var(--primary-gradient-start) 0%,
+    var(--primary-gradient-end) 100%
+  );
+  --bg-gradient-reverse: linear-gradient(
+    135deg,
+    var(--primary-gradient-end) 0%,
+    var(--primary-gradient-start) 100%
+  );
+
+  /* ============================================================================
+     Text Colors
+     ============================================================================ */
+
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --text-muted: #666666;
+  --text-light: #ffffff;
+  --text-dark: #212529;
+  --text-inverse: #ffffff;
+
+  /* ============================================================================
+     Border Colors
+     ============================================================================ */
+
+  --border-color: #e9ecef;
+  --border-light: #f8f9fa;
+  --border-dark: #dee2e6;
+  --border-focus: var(--primary-color);
+  --border-error: var(--danger-color);
+  --border-success: var(--success-color);
+  --border-warning: var(--warning-color);
+
+  /* ============================================================================
+     Shadow Colors
+     ============================================================================ */
+
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.2);
+  --shadow-dark: rgba(0, 0, 0, 0.5);
+  --shadow-primary: rgba(102, 126, 234, 0.3);
+  --shadow-success: rgba(40, 167, 69, 0.3);
+  --shadow-danger: rgba(220, 53, 69, 0.3);
+  --shadow-warning: rgba(255, 193, 7, 0.3);
+
+  /* ============================================================================
+     Spacing Scale
+     ============================================================================ */
+
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
+
+  /* ============================================================================
+     Typography Scale
+     ============================================================================ */
+
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+  --font-size-5xl: 3rem; /* 48px */
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* ============================================================================
+     Border Radius Scale
+     ============================================================================ */
+
+  --radius-none: 0;
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-2xl: 1.5rem; /* 24px */
+  --radius-full: 9999px;
+
+  /* ============================================================================
+     Transition Durations
+     ============================================================================ */
+
+  --transition-fast: 0.15s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+
+  /* ============================================================================
+     Z-Index Scale
+     ============================================================================ */
+
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+
+  /* ============================================================================
+     Component Specific Colors
+     ============================================================================ */
+
+  /* Teleprompter Display */
+  --teleprompter-bg: #000000;
+  --teleprompter-text: #ffffff;
+  --teleprompter-highlight: rgba(255, 255, 0, 0.3);
+  --teleprompter-matched: #4caf50;
+  --teleprompter-faded: rgba(255, 255, 255, 0.3);
+  --teleprompter-interim: #999999;
+
+  /* Progress Bar */
+  --progress-bg: var(--bg-tertiary);
+  --progress-fill: var(--bg-gradient);
+
+  /* Speech Output */
+  --speech-output-bg: var(--bg-secondary);
+  --speech-output-border: var(--border-color);
+  --speech-output-text: var(--text-secondary);
+
+  /* Button Variants */
+  --button-primary-bg: var(--bg-gradient);
+  --button-primary-hover: var(--bg-gradient-reverse);
+  --button-primary-text: var(--text-light);
+
+  --button-success-bg: linear-gradient(45deg, var(--success-color), var(--success-light));
+  --button-success-hover: linear-gradient(45deg, var(--success-light), var(--success-color));
+  --button-success-text: var(--text-light);
+
+  --button-danger-bg: linear-gradient(45deg, var(--danger-color), var(--danger-light));
+  --button-danger-hover: linear-gradient(45deg, var(--danger-light), var(--danger-color));
+  --button-danger-text: var(--text-light);
+
+  --button-neutral-bg: linear-gradient(45deg, var(--neutral-color), var(--neutral-light));
+  --button-neutral-hover: linear-gradient(45deg, var(--neutral-light), var(--neutral-color));
+  --button-neutral-text: var(--text-light);
+
+  /* Form Elements */
+  --input-bg: var(--bg-primary);
+  --input-border: var(--border-color);
+  --input-border-focus: var(--border-focus);
+  --input-text: var(--text-primary);
+  --input-placeholder: var(--text-muted);
+
+  --select-bg: var(--bg-primary);
+  --select-border: var(--border-color);
+  --select-border-focus: var(--border-focus);
+  --select-text: var(--text-primary);
+
+  /* Attachment Display */
+  --attachment-bg: var(--bg-primary);
+  --attachment-border: var(--success-color);
+  --attachment-text: var(--text-primary);
+  --attachment-title: var(--success-color);
+  --attachment-name-bg: var(--success-bg);
+}
+
+/* ============================================================================
+   Dark Theme Support (Future Enhancement)
+   ============================================================================ */
+
+
+/* ============================================================================
+   High Contrast Mode Support
+   ============================================================================ */
+
+
+/* ============================================================================
+   Reduced Motion Support
+   ============================================================================ */
+
