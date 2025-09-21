@@ -1,9 +1,12 @@
 #!/bin/bash
 
-# Deploy script for GitHub Pages using main branch
-echo "🚀 Starting deployment to GitHub Pages (main branch)..."
+# Clean and deploy script for GitHub Pages
+echo "🧹 Cleaning previous build files..."
 
-# Build the application
+# Remove only build artifacts, keep source files
+rm -f favicon.ico
+rm -rf assets
+
 echo "📦 Building application..."
 npm run build:prod
 
