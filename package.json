@@ -11,11 +11,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
+    "test:ci": "vitest run",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage",
     "lint": "eslint . --fix",
     "type-check": "vue-tsc --build",
-    "deploy": "npm run lint && npm run test && npm run build && git add docs && git commit -m 'Deploy to main' && git push origin main"
+    "deploy": "npm run lint && npm run test:ci && npm run build && git add docs && git commit -m 'Deploy to main' && git push origin main"
   },
   "dependencies": {
     "pinia": "^3.0.3",
