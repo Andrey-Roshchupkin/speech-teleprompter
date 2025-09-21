@@ -63,16 +63,29 @@ npm run preview
 
 ## 🚀 Deployment
 
-### Automatic Deployment (GitHub Pages)
-
-The application is automatically deployed to GitHub Pages when you push to the `main` branch.
-
-### Manual Deployment
+### Manual Deployment to GitHub Pages
 
 ```bash
-# Deploy to GitHub Pages
+# Option 1: Using npm script
 npm run deploy
+
+# Option 2: Using deploy script
+./deploy.sh
+
+# Option 3: Step by step
+npm run build:prod
+npx gh-pages -d dist
 ```
+
+### First-time Setup
+
+1. **Create GitHub repository** and push your code
+2. **Run deployment** using one of the methods above
+3. **Enable GitHub Pages** in repository settings:
+   - Go to Settings → Pages
+   - Source: Deploy from a branch
+   - Branch: `gh-pages` / `(root)`
+4. **Your app will be available** at: `https://your-username.github.io/speech-teleprompter/`
 
 ## 🎯 How It Works
 

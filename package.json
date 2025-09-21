@@ -23,7 +23,8 @@
     "format": "prettier --write src/",
     "format:check": "prettier --check src/",
     "pre-commit": "npm run lint:check && npm run test:ci && npm run format:check && npm run type-check",
-    "deploy": "npm run build:prod && gh-pages -d dist"
+    "deploy": "npm run build:prod && gh-pages -d dist",
+    "deploy:setup": "gh-pages -d dist --add"
   },
   "dependencies": {
     "pinia": "^3.0.3",
