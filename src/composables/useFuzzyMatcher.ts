@@ -111,140 +111,76 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
   };
 
   /**
-   * Find the best match for spoken words in the script (async version)
-   * Only searches forward from the current position to prevent backward movement
-   * For long phrases, searches from the end for better performance
+   * Simple sliding window matching algorithm
+   * Based on word-by-word comparison with bonus scoring
    */
   const findBestMatch = async (
     spokenWords: string[],
     scriptWords: string[],
     startIndex: number = 0
   ): Promise<MatchResult> => {
+    const startTime = performance.now();
+
+    // Step 1: Determine search window size
+    const bufferSize = Math.min(
+      10,
+      Math.max(5, Math.floor(spokenWords.length * 0.5))
+    );
+    const windowSize = spokenWords.length + bufferSize;
+    const searchEnd = Math.min(startIndex + windowSize, scriptWords.length);
+
+    options.logger?.debug(
+      `🔍 Search window: ${windowSize} words (${spokenWords.length} + ${bufferSize} buffer)`
+    );
+    options.logger?.debug(`📍 Search range: ${startIndex} to ${searchEnd}`);
+
     let bestMatch: MatchResult = {
       index: -1,
       score: 0,
-      length: 0,
+      length: spokenWords.length,
       rawSimilarity: 0,
       distance: 0,
     };
-    const startTime = performance.now();
 
-    // Two-phase search strategy for better performance (optimized for speed)
-    const searchPhases = [
-      { name: 'fast', maxDistance: 8, maxLength: 5 },
-      { name: 'thorough', maxDistance: 15, maxLength: 8 },
-    ];
+    // Step 2: Sliding window comparison
+    for (let i = startIndex; i <= searchEnd - spokenWords.length; i++) {
+      let score = 0;
+      let matches = 0;
 
-    // For long phrases (>10 words), search from the end for better performance
-    const isLongPhrase = spokenWords.length > 10;
-    const searchOrder = isLongPhrase ? 'reverse' : 'normal';
+      // Compare each word in the spoken fragment
+      for (let j = 0; j < spokenWords.length; j++) {
+        const spokenWord = spokenWords[j].toLowerCase();
+        const scriptWord = scriptWords[i + j]?.toLowerCase();
 
-    if (isLongPhrase) {
-      options.logger?.debug(
-        `🔍 Long phrase detected (${spokenWords.length} words), searching from end`
-      );
-    }
+        if (spokenWord === scriptWord) {
+          matches++;
 
-    for (const phase of searchPhases) {
-      // Try different segment lengths, prioritizing longer matches
-      const segmentLengths = isLongPhrase
-        ? Array.from(
-            { length: Math.min(spokenWords.length, phase.maxLength) },
-            (_, i) => Math.min(spokenWords.length, phase.maxLength) - i
-          )
-        : Array.from(
-            { length: Math.min(spokenWords.length, phase.maxLength) },
-            (_, i) => Math.min(spokenWords.length, phase.maxLength) - i
-          );
+          // Base score: +1 for each match
+          score += 1;
 
-      for (const j of segmentLengths) {
-        // Check if we need to yield control
-        if (performance.now() - startTime > maxProcessingTime) {
-          await yieldToMainThread();
-        }
-
-        // For long phrases, search from the end
-        const spokenSegment = isLongPhrase
-          ? spokenWords.slice(-j).join(' ').toLowerCase()
-          : spokenWords.slice(0, j).join(' ').toLowerCase();
-
-        // Adaptive search window based on phrase length
-        const baseDistance = phase.maxDistance;
-        const adaptiveDistance = isLongPhrase
-          ? Math.min(baseDistance * 2, 30) // Longer distance for long phrases
-          : baseDistance;
-
-        const maxLookForward = Math.min(
-          adaptiveDistance,
-          scriptWords.length - startIndex
-        );
-        const searchStart = startIndex; // No backward search
-        const searchEnd = startIndex + maxLookForward;
-
-        for (let i = searchStart; i < searchEnd; i++) {
-          // Yield control periodically during inner loop
-          if (
-            (i - searchStart) % 5 === 0 &&
-            performance.now() - startTime > maxProcessingTime
-          ) {
-            await yieldToMainThread();
+          // Bonus scoring based on position
+          if (j === spokenWords.length - 1) {
+            // Last word bonus: +3
+            score += 3;
+          } else if (j === spokenWords.length - 2) {
+            // Second-to-last word bonus: +2
+            score += 2;
           }
-
-          if (i + j > scriptWords.length) continue;
-
-          const scriptSegment = scriptWords
-            .slice(i, i + j)
-            .join(' ')
-            .toLowerCase();
-
-          const similarity = calculateSimilarity(spokenSegment, scriptSegment);
-
-          // Use precision parameter to calculate dynamic thresholds
-          const baseThreshold = precision.value / 100;
-          const minThreshold = j === 1 ? baseThreshold + 0.15 : baseThreshold;
-          if (similarity < minThreshold) continue;
-
-          // Stronger distance penalty to prefer matches closer to current position
-          const distancePenalty = Math.abs(i - startIndex) * 0.05;
-          const adjustedScore = similarity - distancePenalty;
-
-          // Bonus for longer matches to prevent single-word jumping
-          let lengthBonus = j > 1 ? 0.1 : 0;
-          if (j >= 6) lengthBonus += 0.05;
-          if (j >= 10) lengthBonus += 0.05;
-
-          const finalScore = adjustedScore + lengthBonus;
-
-          if (finalScore > bestMatch.score) {
-            // For long phrases searched from the end, adjust the index
-            const matchIndex = isLongPhrase ? i + j - spokenWords.length : i;
-            bestMatch = {
-              index: matchIndex,
-              score: finalScore,
-              length: j,
-              rawSimilarity: similarity,
-              distance: Math.abs(matchIndex - startIndex),
-            };
-          }
-        }
-
-        // Only stop if we found a perfect match (100% similarity) with good length
-        // This allows us to find longer matches even if shorter ones are very good
-        const shouldStop =
-          bestMatch.rawSimilarity >= 1.0 && bestMatch.length >= 8;
-        if (shouldStop) {
-          break;
         }
       }
 
-      // If we found a very good match in the fast phase, skip the thorough phase
-      // But only if it's a long enough match to be confident
-      if (
-        phase.name === 'fast' &&
-        bestMatch.score > 0.8 &&
-        bestMatch.length >= 8
-      ) {
-        break;
+      // Calculate similarity as percentage of matches
+      const similarity = matches / spokenWords.length;
+
+      // Update best match if this is better
+      if (score > bestMatch.score) {
+        bestMatch = {
+          index: i,
+          score: score,
+          length: spokenWords.length,
+          rawSimilarity: similarity,
+          distance: Math.abs(i - startIndex),
+        };
       }
     }
 
@@ -252,6 +188,10 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
     const endTime = performance.now();
     const searchTime = endTime - startTime;
     updatePerformanceStats(searchTime);
+
+    options.logger?.debug(
+      `🎯 Best match: index=${bestMatch.index}, score=${bestMatch.score}, similarity=${bestMatch.rawSimilarity.toFixed(3)}`
+    );
 
     return bestMatch;
   };
@@ -305,35 +245,18 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
         `🎯 Match result: index=${match.index}, score=${match.score.toFixed(3)}, length=${match.length}, similarity=${match.rawSimilarity.toFixed(3)}`
       );
 
-      // Use dynamic thresholds based on match length, distance, and precision
-      const baseSimilarity = precision.value / 100;
-      const minSimilarity =
-        match.length === 1 ? baseSimilarity + 0.2 : baseSimilarity;
-
-      // Allow longer distances for high-quality matches
-      // For teleprompter, we want to be more permissive with forward movement
-      let maxDistance: number;
-      if (match.length === 1) {
-        maxDistance = 3; // Single words need to be close
-      } else if (match.rawSimilarity >= 0.9) {
-        maxDistance = 25; // Very high similarity allows longer jumps
-      } else if (match.rawSimilarity >= 0.8) {
-        maxDistance = 20; // High similarity allows moderate jumps
-      } else {
-        maxDistance = 15; // Default for good matches
-      }
+      // Step 3: Check threshold (30% of maximum possible score)
+      const maxPossibleScore = match.length + 3; // All words + last word bonus
+      const threshold = maxPossibleScore * 0.3; // 30% threshold
 
       options.logger?.debug(
-        `📊 Thresholds: minSimilarity=${minSimilarity.toFixed(3)}, maxDistance=${maxDistance}, precision=${precision.value}`
+        `📊 Threshold check: score=${match.score}, maxPossible=${maxPossibleScore}, threshold=${threshold.toFixed(1)}`
       );
 
-      const isValidMatch =
-        match.index !== -1 &&
-        match.rawSimilarity >= minSimilarity &&
-        match.distance <= maxDistance;
+      const isValidMatch = match.index !== -1 && match.score >= threshold;
 
       options.logger?.debug(
-        `✅ Match validation: ${isValidMatch ? 'PASSED' : 'FAILED'} (index=${match.index !== -1}, similarity=${match.rawSimilarity >= minSimilarity}, distance=${match.distance <= maxDistance})`
+        `✅ Match validation: ${isValidMatch ? 'PASSED' : 'FAILED'} (score=${match.score} >= ${threshold.toFixed(1)})`
       );
 
       if (isValidMatch) {
@@ -453,32 +376,11 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
       return;
     }
 
-    // Accumulate new words for context-aware matching
-    accumulateSpokenWords(spokenWords);
-
-    // Check if we should clear context (large position jump)
-    const positionJump = Math.abs(
-      currentPosition - lastProcessedPosition.value
+    // Simple approach: process only the current spoken words
+    const wordsToProcess = spokenWords;
+    options.logger?.debug(
+      `🆕 Processing ${wordsToProcess.length} words: "${wordsToProcess.join(' ')}"`
     );
-    if (positionJump > 20) {
-      clearAccumulatedContext();
-    }
-
-    // Smart context selection: use recent words + current words for better performance
-    let wordsToProcess: string[];
-    if (accumulatedSpokenWords.value.length > 0) {
-      // Use last 20 words from context + current words for optimal performance
-      const recentContext = accumulatedSpokenWords.value.slice(-20);
-      wordsToProcess = [...recentContext, ...spokenWords];
-      options.logger?.debug(
-        `🔄 Using accumulated context: ${accumulatedSpokenWords.value.length} total words, processing ${wordsToProcess.length} words`
-      );
-    } else {
-      wordsToProcess = spokenWords;
-      options.logger?.debug(
-        `🆕 No accumulated context, processing ${wordsToProcess.length} words`
-      );
-    }
 
     // Add to processing queue to prevent concurrent processing
     processingQueue.push({
