@@ -55,6 +55,11 @@ export class StateManager {
     };
 
     this.log.info('🏗️ StateManager initialized');
+
+    // Add debugging methods to global window object
+    window.syncPiPButtonStates = () => {
+      this.syncPiPButtonStates();
+    };
   }
 
   /**
@@ -90,11 +95,7 @@ export class StateManager {
     this.notifySubscribers(updates, oldState, source);
 
     // Sync with PiP if it's open
-    if (
-      this.state.isInPiP &&
-      this.state.pipWindow &&
-      !this.state.pipWindow.closed
-    ) {
+    if (this.state.isInPiP && this.state.pipWindow && !this.state.pipWindow.closed) {
       this.syncWithPiP(updates);
     }
   }
@@ -136,9 +137,7 @@ export class StateManager {
           try {
             callback(updates[key], oldState[key], source);
           } catch (error) {
-            this.log.error(
-              `❌ Error in subscriber ${context} for ${key}: ${error.message}`
-            );
+            this.log.error(`❌ Error in subscriber ${context} for ${key}: ${error.message}`);
           }
         });
       }
@@ -151,6 +150,48 @@ export class StateManager {
   setPiPElements(controls, display, attachment) {
     this.pipElements = { controls, display, attachment };
     this.log.info('🖼️ PiP elements registered for synchronization');
+  }
+
+  /**
+   * Check if PiP window is still open
+   */
+  isPiPWindowOpen() {
+    return this.state.isInPiP && this.state.pipWindow && !this.state.pipWindow.closed;
+  }
+
+  /**
+   * Force close PiP and move elements back
+   */
+  forceClosePiP() {
+    if (this.isPiPWindowOpen()) {
+      this.log.info('🔄 Force closing PiP window...');
+
+      // Update state to indicate PiP is closing
+      this.updateState(
+        {
+          isInPiP: false,
+          pipWindow: null,
+        },
+        'StateManager.forceClosePiP'
+      );
+
+      // Clear PiP elements
+      this.clearPiPElements();
+
+      this.log.info('✅ PiP force closed');
+    }
+  }
+
+  /**
+   * Manually sync PiP button states (for debugging)
+   */
+  syncPiPButtonStates() {
+    if (this.isPiPWindowOpen()) {
+      this.log.info('🔄 Manually syncing PiP button states...');
+      this.syncPiPControls();
+    } else {
+      this.log.info('📺 No PiP window open to sync');
+    }
   }
 
   /**
@@ -180,18 +221,12 @@ export class StateManager {
       }
 
       // Sync controls state
-      if (
-        updates.isListening !== undefined ||
-        updates.recognitionStatus !== undefined
-      ) {
+      if (updates.isListening !== undefined || updates.recognitionStatus !== undefined) {
         this.syncPiPControls();
       }
 
       // Sync scroll position
-      if (
-        updates.topLinePosition !== undefined ||
-        updates.lastScrollPosition !== undefined
-      ) {
+      if (updates.topLinePosition !== undefined || updates.lastScrollPosition !== undefined) {
         this.syncPiPScroll();
       }
 
@@ -214,12 +249,40 @@ export class StateManager {
   }
 
   /**
-   * Sync PiP controls state (DEPRECATED - not needed with MDN approach)
+   * Sync PiP controls state
    */
   syncPiPControls() {
-    // No need to sync since we're using the same elements
-    // Button states and input values are automatically synchronized
-    this.log.info('📺 PiP controls sync skipped - using original elements');
+    if (!this.pipElements.controls) {
+      this.log.info('📺 No PiP controls to sync');
+      return;
+    }
+
+    try {
+      // Sync toggle button state
+      const mainToggleBtn = document.getElementById('toggleButton');
+      const pipToggleBtn = this.pipElements.controls.querySelector('#toggleButton');
+
+      if (mainToggleBtn && pipToggleBtn) {
+        // Sync button text and class
+        pipToggleBtn.textContent = mainToggleBtn.textContent;
+        pipToggleBtn.className = mainToggleBtn.className;
+        this.log.info(`📺 PiP toggle button synced: ${pipToggleBtn.textContent}`);
+      }
+
+      // Sync language settings state
+      const mainLanguageSelect = document.getElementById('primaryLanguage');
+      const pipLanguageSelect = this.pipElements.controls.querySelector('#primaryLanguage');
+
+      if (mainLanguageSelect && pipLanguageSelect) {
+        pipLanguageSelect.disabled = mainLanguageSelect.disabled;
+        pipLanguageSelect.title = mainLanguageSelect.title;
+        this.log.info(`📺 PiP language select synced: disabled=${pipLanguageSelect.disabled}`);
+      }
+
+      this.log.info('📺 PiP controls state synchronized');
+    } catch (error) {
+      this.log.error(`❌ Error syncing PiP controls: ${error.message}`);
+    }
   }
 
   /**
@@ -268,9 +331,7 @@ export class StateManager {
     return {
       state: this.state,
       subscribers: Array.from(this.subscribers.keys()),
-      pipElements: Object.keys(this.pipElements).filter(
-        (key) => this.pipElements[key] !== null
-      ),
+      pipElements: Object.keys(this.pipElements).filter((key) => this.pipElements[key] !== null),
     };
   }
 }

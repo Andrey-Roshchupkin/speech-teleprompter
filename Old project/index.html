@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -16,11 +16,7 @@
       <div class="teleprompter-right-panel">
         <div class="teleprompter-header">
           <h3>📺 Teleprompter Display</h3>
-          <button
-            id="pipButton"
-            class="pip-button"
-            title="Open in Picture-in-Picture"
-          >
+          <button id="pipButton" class="pip-button" title="Open in Picture-in-Picture">
             📺 PiP
           </button>
         </div>
@@ -28,37 +24,18 @@
         <!-- Teleprompter Controls Component -->
         <div id="teleprompterControls" class="teleprompter-controls-component">
           <div class="teleprompter-controls">
-            <button id="startButton" class="teleprompter-start-button">
-              Start
-            </button>
-            <button id="stopButton" class="teleprompter-stop-button" disabled>
-              Stop
-            </button>
-            <button id="resetButton" class="teleprompter-reset-button">
-              Reset
-            </button>
+            <button id="toggleButton" class="teleprompter-start-button">Start</button>
+            <button id="resetButton" class="teleprompter-reset-button">Reset</button>
           </div>
 
           <div class="teleprompter-settings-inline">
             <div class="setting-column">
               <label for="linesToShow">Lines to Show</label>
-              <input
-                type="number"
-                id="linesToShow"
-                value="5"
-                min="3"
-                max="10"
-              />
+              <input type="number" id="linesToShow" value="5" min="3" max="10" />
             </div>
             <div class="setting-column">
               <label for="scrollTrigger">Scroll After Lines</label>
-              <input
-                type="number"
-                id="scrollTrigger"
-                value="3"
-                min="1"
-                max="4"
-              />
+              <input type="number" id="scrollTrigger" value="3" min="1" max="4" />
             </div>
             <div class="setting-column">
               <label for="textSize">Text Size (px)</label>
@@ -66,14 +43,7 @@
             </div>
             <div class="setting-column">
               <label for="fuzzyPrecision">Fuzzy Match Precision</label>
-              <input
-                type="number"
-                id="fuzzyPrecision"
-                value="65"
-                min="50"
-                max="95"
-                step="5"
-              />
+              <input type="number" id="fuzzyPrecision" value="65" min="50" max="95" step="5" />
             </div>
           </div>
         </div>
@@ -132,8 +102,8 @@
           </div>
           <div class="language-info">
             <p>
-              <strong>Language Selection:</strong> Choose your primary language
-              for speech recognition.
+              <strong>Language Selection:</strong> Choose your primary language for speech
+              recognition.
             </p>
           </div>
         </div>
@@ -149,10 +119,7 @@
         <!-- Script Text Section -->
         <div class="teleprompter-section">
           <h3>📝 Script Text</h3>
-          <textarea
-            id="scriptText"
-            placeholder="Enter your teleprompter script here..."
-          >
+          <textarea id="scriptText" placeholder="Enter your teleprompter script here...">
 Welcome to our presentation. Today we will be discussing the future of technology and how it impacts our daily lives. Let me start by sharing some interesting statistics about digital transformation in various industries.</textarea
           >
         </div>
@@ -167,80 +134,29 @@ Welcome to our presentation. Today we will be discussing the future of technolog
               <label>Log Level</label>
               <div class="radio-group">
                 <label class="radio-option">
-                  <input
-                    type="radio"
-                    name="logLevel"
-                    value="off"
-                    id="logLevelOff"
-                  />
+                  <input type="radio" name="logLevel" value="off" id="logLevelOff" />
                   <span>Off</span>
                 </label>
                 <label class="radio-option">
-                  <input
-                    type="radio"
-                    name="logLevel"
-                    value="error"
-                    id="logLevelError"
-                  />
+                  <input type="radio" name="logLevel" value="error" id="logLevelError" />
                   <span>Error</span>
                 </label>
                 <label class="radio-option">
-                  <input
-                    type="radio"
-                    name="logLevel"
-                    value="info"
-                    id="logLevelInfo"
-                    checked
-                  />
+                  <input type="radio" name="logLevel" value="info" id="logLevelInfo" checked />
                   <span>Info</span>
                 </label>
                 <label class="radio-option">
-                  <input
-                    type="radio"
-                    name="logLevel"
-                    value="debug"
-                    id="logLevelDebug"
-                  />
+                  <input type="radio" name="logLevel" value="debug" id="logLevelDebug" />
                   <span>Debug</span>
                 </label>
               </div>
             </div>
           </div>
 
-          <div
-            id="debugLog"
-            style="
-              background: #1a1a1a;
-              border: 2px solid #333;
-              border-radius: 10px;
-              padding: 15px;
-              min-height: 150px;
-              max-height: 200px;
-              font-size: 12px;
-              line-height: 1.4;
-              color: #00ff00;
-              font-family: 'Courier New', monospace;
-              overflow-y: auto;
-              white-space: pre-wrap;
-            "
-          >
-            Debug log will appear here...
-          </div>
-          <button
-            id="clearDebugLog"
-            style="
-              margin-top: 10px;
-              padding: 8px 16px;
-              background: #6c757d;
-              color: white;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-              font-size: 14px;
-            "
-          >
-            Clear Log
-          </button>
+          <p>
+            Logs are displayed in the browser's developer console.<br />
+            Open DevTools and view logs in the Console tab.
+          </p>
         </div>
       </div>
     </div>

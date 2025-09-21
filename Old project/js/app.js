@@ -40,9 +40,7 @@ class SpeechTeleprompterApp {
     // Initialize modules
     this.debugLogger.info('🔧 Creating SpeechRecognitionModule...');
     this.speechRecognition = new SpeechRecognitionModule(this.debugLogger);
-    this.debugLogger.info(
-      `✅ SpeechRecognitionModule created: ${!!this.speechRecognition}`
-    );
+    this.debugLogger.info(`✅ SpeechRecognitionModule created: ${!!this.speechRecognition}`);
 
     this.debugLogger.info('🔧 Creating FuzzyMatcher...');
     this.fuzzyMatcher = new FuzzyMatcher(this.debugLogger);
@@ -50,15 +48,11 @@ class SpeechTeleprompterApp {
 
     this.debugLogger.info('🔧 Creating TeleprompterDisplay...');
     this.teleprompterDisplay = new TeleprompterDisplay(this.debugLogger);
-    this.debugLogger.info(
-      `✅ TeleprompterDisplay created: ${!!this.teleprompterDisplay}`
-    );
+    this.debugLogger.info(`✅ TeleprompterDisplay created: ${!!this.teleprompterDisplay}`);
 
     this.debugLogger.info('🔧 Creating LocalStorageManager...');
     this.localStorage = new LocalStorageManager(this.debugLogger);
-    this.debugLogger.info(
-      `✅ LocalStorageManager created: ${!!this.localStorage}`
-    );
+    this.debugLogger.info(`✅ LocalStorageManager created: ${!!this.localStorage}`);
 
     // Set up module callbacks
     this.setupModuleCallbacks();
@@ -72,8 +66,7 @@ class SpeechTeleprompterApp {
   setupModuleCallbacks() {
     // Speech recognition callbacks
     this.speechRecognition.setCallbacks(
-      (newFinalWords, speechOutputHTML) =>
-        this.handleSpeechResult(newFinalWords, speechOutputHTML),
+      (newFinalWords, speechOutputHTML) => this.handleSpeechResult(newFinalWords, speechOutputHTML),
       (status, languageInfo) => this.handleStatusChange(status, languageInfo)
     );
   }
@@ -84,9 +77,7 @@ class SpeechTeleprompterApp {
   addNamespacedEventListener(element, event, handler, options = {}) {
     const namespacedEvent = `${event}.${this.namespace}`;
     const wrappedHandler = (e) => {
-      this.debugLogger.info(
-        `🎯 Event triggered: ${event} on ${e.target.id || e.target.tagName}`
-      );
+      this.debugLogger.info(`🎯 Event triggered: ${event} on ${e.target.id || e.target.tagName}`);
       handler(e);
     };
 
@@ -96,9 +87,7 @@ class SpeechTeleprompterApp {
     if (!this.eventHandlers.has(element)) {
       this.eventHandlers.set(element, []);
     }
-    this.eventHandlers
-      .get(element)
-      .push({ event, handler: wrappedHandler, options });
+    this.eventHandlers.get(element).push({ event, handler: wrappedHandler, options });
   }
 
   /**
@@ -112,13 +101,12 @@ class SpeechTeleprompterApp {
     const textSize = this.container.querySelector('#textSize');
     const fuzzyPrecision = this.container.querySelector('#fuzzyPrecision');
     const primaryLanguage = this.container.querySelector('#primaryLanguage');
-    const startButton = this.container.querySelector('#startButton');
-    const stopButton = this.container.querySelector('#stopButton');
+    const toggleButton = this.container.querySelector('#toggleButton');
     const resetButton = this.container.querySelector('#resetButton');
 
     // Debug: Log which elements were found
     this.debugLogger.info(
-      `🔍 Found elements: scriptText=${!!scriptText}, linesToShow=${!!linesToShow}, scrollTrigger=${!!scrollTrigger}, textSize=${!!textSize}, fuzzyPrecision=${!!fuzzyPrecision}, primaryLanguage=${!!primaryLanguage}, startButton=${!!startButton}, stopButton=${!!stopButton}, resetButton=${!!resetButton}`
+      `🔍 Found elements: scriptText=${!!scriptText}, linesToShow=${!!linesToShow}, scrollTrigger=${!!scrollTrigger}, textSize=${!!textSize}, fuzzyPrecision=${!!fuzzyPrecision}, primaryLanguage=${!!primaryLanguage}, toggleButton=${!!toggleButton}, resetButton=${!!resetButton}`
     );
 
     // Simple event listeners removed to prevent duplicate calls with namespaced listeners
@@ -153,16 +141,10 @@ class SpeechTeleprompterApp {
         this.handleLanguageChange();
       });
     }
-    if (startButton) {
-      this.addNamespacedEventListener(startButton, 'click', () => {
-        this.debugLogger.info('🎤 Start button clicked');
-        this.startRecognition();
-      });
-    }
-    if (stopButton) {
-      this.addNamespacedEventListener(stopButton, 'click', () => {
-        this.debugLogger.info('🛑 Stop button clicked');
-        this.stopRecognition();
+    if (toggleButton) {
+      this.addNamespacedEventListener(toggleButton, 'click', () => {
+        this.debugLogger.info('🔄 Toggle button clicked');
+        this.toggleRecognition();
       });
     }
     if (resetButton) {
@@ -172,26 +154,13 @@ class SpeechTeleprompterApp {
       });
     }
 
-    // Clear debug log button
-    const clearDebugLog = this.container.querySelector('#clearDebugLog');
-    if (clearDebugLog) {
-      clearDebugLog.addEventListener('click', () => {
-        this.debugLogger.info('🧹 Clear debug log clicked (simple listener)');
-        this.clearDebugLog();
-      });
-    }
-
     // Log level radio buttons
-    const logLevelRadios = this.container.querySelectorAll(
-      'input[name="logLevel"]'
-    );
+    const logLevelRadios = this.container.querySelectorAll('input[name="logLevel"]');
     logLevelRadios.forEach((radio) => {
       this.addNamespacedEventListener(radio, 'change', () => {
         if (radio.checked) {
           const logLevel = radio.value;
-          this.debugLogger.info(
-            `🐛 Log level changed to: ${logLevel.toUpperCase()}`
-          );
+          this.debugLogger.info(`🐛 Log level changed to: ${logLevel.toUpperCase()}`);
           logManager.setLogLevel(logLevel);
           this.saveLogLevel(logLevel);
         }
@@ -319,10 +288,45 @@ class SpeechTeleprompterApp {
   loadLogLevel() {
     try {
       const savedLogLevel = localStorage.getItem('teleprompter_logLevel');
-      if (
-        savedLogLevel &&
-        ['off', 'error', 'info', 'debug'].includes(savedLogLevel)
-      ) {
+      if (savedLogLevel && ['off', 'error', 'info', 'debug'].includes(savedLogLevel)) {
+        logManager.setLogLevel(savedLogLevel);
+
+        // Update radio button selection
+        const radioButton = this.container.querySelector(
+          `input[name="logLevel"][value="${savedLogLevel}"]`
+        );
+        if (radioButton) {
+          radioButton.checked = true;
+        }
+
+        this.debugLogger.info(`📦 Log level loaded: ${savedLogLevel}`);
+        return savedLogLevel;
+      }
+    } catch (error) {
+      console.error('Failed to load log level:', error);
+    }
+    return 'info'; // Default fallback
+  }
+
+  /**
+   * Save log level to localStorage
+   */
+  saveLogLevel(logLevel) {
+    try {
+      localStorage.setItem('teleprompter_logLevel', logLevel);
+      this.debugLogger.info(`💾 Log level saved: ${logLevel}`);
+    } catch (error) {
+      console.error('Failed to save log level:', error);
+    }
+  }
+
+  /**
+   * Load log level from localStorage
+   */
+  loadLogLevel() {
+    try {
+      const savedLogLevel = localStorage.getItem('teleprompter_logLevel');
+      if (savedLogLevel && ['off', 'error', 'info', 'debug'].includes(savedLogLevel)) {
         logManager.setLogLevel(savedLogLevel);
 
         // Update radio button selection
@@ -348,13 +352,9 @@ class SpeechTeleprompterApp {
   handleScriptChange() {
     const scriptText = this.container.querySelector('#scriptText')?.value || '';
 
+    this.debugLogger.info(`📝 Script text updated: ${scriptText.length} characters`);
     this.debugLogger.info(
-      `📝 Script text updated: ${scriptText.length} characters`
-    );
-    this.debugLogger.info(
-      `📝 Script preview: "${scriptText.substring(0, 100)}${
-        scriptText.length > 100 ? '...' : ''
-      }"`
+      `📝 Script preview: "${scriptText.substring(0, 100)}${scriptText.length > 100 ? '...' : ''}"`
     );
 
     this.teleprompterDisplay.updateScript(scriptText);
@@ -440,9 +440,7 @@ class SpeechTeleprompterApp {
           (result) => this.handleMatchFound(result)
         );
       } catch (error) {
-        this.debugLogger.info(
-          '❌ Error processing speech result: ' + error.message
-        );
+        this.debugLogger.info('❌ Error processing speech result: ' + error.message);
       }
     }
   }
@@ -454,21 +452,12 @@ class SpeechTeleprompterApp {
     try {
       this.debugLogger.info(`🔍 Match result: ${JSON.stringify(result)}`);
 
-      if (
-        !result ||
-        typeof result.newPosition === 'undefined' ||
-        !result.matchedIndices
-      ) {
-        this.debugLogger.info(
-          `⚠️ Invalid match result: ${JSON.stringify(result)}`
-        );
+      if (!result || typeof result.newPosition === 'undefined' || !result.matchedIndices) {
+        this.debugLogger.info(`⚠️ Invalid match result: ${JSON.stringify(result)}`);
         return;
       }
 
-      this.teleprompterDisplay.updatePosition(
-        result.newPosition,
-        result.matchedIndices
-      );
+      this.teleprompterDisplay.updatePosition(result.newPosition, result.matchedIndices);
     } catch (error) {
       this.debugLogger.info('❌ Error processing match: ' + error.message);
     }
@@ -485,14 +474,11 @@ class SpeechTeleprompterApp {
       if (isListening) {
         primaryLanguage.title = 'Language settings disabled while listening';
       } else {
-        primaryLanguage.title =
-          'Select primary language for speech recognition';
+        primaryLanguage.title = 'Select primary language for speech recognition';
       }
     }
 
-    this.debugLogger.info(
-      `🌍 Language settings ${isListening ? 'disabled' : 'enabled'}`
-    );
+    this.debugLogger.info(`🌍 Language settings ${isListening ? 'disabled' : 'enabled'}`);
   }
 
   /**
@@ -507,16 +493,31 @@ class SpeechTeleprompterApp {
 
     // Update button states
     const isListening = status === 'listening';
-    const startBtn = document.getElementById('startButton');
-    const stopBtn = document.getElementById('stopButton');
 
-    if (startBtn) {
-      startBtn.disabled = isListening;
-      this.debugLogger.info(`🎤 Start button disabled: ${isListening}`);
-    }
-    if (stopBtn) {
-      stopBtn.disabled = !isListening;
-      this.debugLogger.info(`🛑 Stop button disabled: ${!isListening}`);
+    // Try to find button in current document context (works for both main and PiP)
+    const toggleBtn = document.getElementById('toggleButton');
+
+    this.debugLogger.info(`🔄 Status change: ${status}, isListening: ${isListening}`);
+    this.debugLogger.info(`🔄 Current document: ${document === window.document ? 'main' : 'PiP'}`);
+    this.debugLogger.info(`🔄 Toggle button found: ${!!toggleBtn}`);
+
+    if (toggleBtn) {
+      const oldText = toggleBtn.textContent;
+      const oldClass = toggleBtn.className;
+
+      toggleBtn.textContent = isListening ? 'Stop' : 'Start';
+      toggleBtn.className = isListening ? 'teleprompter-stop-button' : 'teleprompter-start-button';
+
+      this.debugLogger.info(`🔄 Button updated: "${oldText}" → "${toggleBtn.textContent}"`);
+      this.debugLogger.info(`🔄 Class updated: "${oldClass}" → "${toggleBtn.className}"`);
+    } else {
+      // Button not found in current context - this is normal when elements are in PiP
+      this.debugLogger.info('📺 Toggle button not in current document (likely in PiP window)');
+      this.debugLogger.info(
+        `🔄 Available elements with IDs: ${Array.from(document.querySelectorAll('[id]'))
+          .map((el) => el.id)
+          .join(', ')}`
+      );
     }
 
     // Update state in StateManager
@@ -527,6 +528,12 @@ class SpeechTeleprompterApp {
       },
       'App'
     );
+
+    // Force sync PiP controls after button state update
+    if (stateManager.isPiPWindowOpen()) {
+      this.debugLogger.info('🔄 PiP window is open, syncing controls...');
+      stateManager.syncPiPControls();
+    }
 
     // Update language settings state
     this.updateLanguageSettingsState(isListening);
@@ -539,9 +546,7 @@ class SpeechTeleprompterApp {
    */
   startRecognition() {
     this.debugLogger.info('🎤 Starting speech recognition...');
-    this.debugLogger.info(
-      `🔍 Speech recognition module exists: ${!!this.speechRecognition}`
-    );
+    this.debugLogger.info(`🔍 Speech recognition module exists: ${!!this.speechRecognition}`);
     this.debugLogger.info(
       `🔍 Recognition instance exists: ${!!(
         this.speechRecognition && this.speechRecognition.recognition
@@ -549,6 +554,7 @@ class SpeechTeleprompterApp {
     );
 
     if (this.speechRecognition) {
+      this.debugLogger.info('🎤 Calling speechRecognition.start()...');
       this.speechRecognition.start();
       this.debugLogger.info('✅ Speech recognition start() called');
     } else {
@@ -562,10 +568,33 @@ class SpeechTeleprompterApp {
   stopRecognition() {
     this.debugLogger.info('🛑 Stopping speech recognition...');
     if (this.speechRecognition) {
+      this.debugLogger.info('🛑 Calling speechRecognition.stop()...');
       this.speechRecognition.stop();
       this.debugLogger.info('✅ Speech recognition stop() called');
     } else {
       this.debugLogger.info('❌ Speech recognition module not found!');
+    }
+  }
+
+  /**
+   * Toggle speech recognition (start if stopped, stop if started)
+   */
+  toggleRecognition() {
+    // Check current state from StateManager
+    const currentState = stateManager.getState();
+    const isCurrentlyListening = currentState.isListening;
+
+    this.debugLogger.info(
+      `🔄 Toggle button clicked - currently listening: ${isCurrentlyListening}`
+    );
+    this.debugLogger.info(`🔄 Current listening state: ${isCurrentlyListening}`);
+
+    if (isCurrentlyListening) {
+      this.debugLogger.info('🔄 Calling stopRecognition()');
+      this.stopRecognition();
+    } else {
+      this.debugLogger.info('🔄 Calling startRecognition()');
+      this.startRecognition();
     }
   }
 
@@ -582,14 +611,19 @@ class SpeechTeleprompterApp {
     // Update displays
     const speechOutput = document.getElementById('speechOutput');
     if (speechOutput) {
-      speechOutput.innerHTML =
-        'Click "Start Recognition" to begin speech recognition...';
+      speechOutput.innerHTML = 'Click "Start Recognition" to begin speech recognition...';
     }
 
-    const startBtn = document.getElementById('startButton');
-    const stopBtn = document.getElementById('stopButton');
-    if (startBtn) startBtn.disabled = false;
-    if (stopBtn) stopBtn.disabled = true;
+    const toggleBtn = document.getElementById('toggleButton');
+    if (toggleBtn) {
+      toggleBtn.textContent = 'Start';
+      toggleBtn.className = 'teleprompter-start-button';
+    }
+
+    // Force sync PiP controls after reset
+    if (stateManager.isPiPWindowOpen()) {
+      stateManager.syncPiPControls();
+    }
 
     // Reset state in StateManager
     stateManager.reset();

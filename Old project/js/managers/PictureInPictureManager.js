@@ -20,12 +20,7 @@ export class PictureInPictureManager extends BaseManager {
   /**
    * Initialize PiP manager
    */
-  initialize(
-    pipButton,
-    teleprompterControls,
-    teleprompterDisplay,
-    teleprompterAttachment
-  ) {
+  initialize(pipButton, teleprompterControls, teleprompterDisplay, teleprompterAttachment) {
     this.pipButton = pipButton;
     this.teleprompterControls = teleprompterControls;
     this.teleprompterDisplay = teleprompterDisplay;
@@ -49,23 +44,18 @@ export class PictureInPictureManager extends BaseManager {
       this.log(`📺 Retry - PiP button element: ${this.pipButton}`);
 
       if (!this.pipButton) {
-        this.log(
-          '📺 PiP button still not found - element may not exist in DOM'
-        );
+        this.log('📺 PiP button still not found - element may not exist in DOM');
         return;
       }
     }
 
     this.log(`📺 PiP button found: ${this.pipButton.id}`);
-    this.log(
-      `📺 Document Picture-in-Picture supported: ${!!window.documentPictureInPicture}`
-    );
+    this.log(`📺 Document Picture-in-Picture supported: ${!!window.documentPictureInPicture}`);
 
     // Check if Document Picture-in-Picture is supported
     if (!window.documentPictureInPicture) {
       this.pipButton.disabled = true;
-      this.pipButton.title =
-        'Document Picture-in-Picture not supported in this browser';
+      this.pipButton.title = 'Document Picture-in-Picture not supported in this browser';
       this.log('📺 Document Picture-in-Picture not supported');
       return;
     }
@@ -81,16 +71,22 @@ export class PictureInPictureManager extends BaseManager {
 
     // Test if button is clickable
     this.log(`📺 Button disabled state: ${this.pipButton.disabled}`);
-    this.log(
-      `📺 Button style display: ${
-        window.getComputedStyle(this.pipButton).display
-      }`
-    );
+    this.log(`📺 Button style display: ${window.getComputedStyle(this.pipButton).display}`);
 
     // Listen for Document PiP events (MDN approach)
     window.documentPictureInPicture.addEventListener('enter', (event) => {
       this.isInPiP = true;
       this.pipWindow = event.window;
+
+      // Update StateManager
+      stateManager.updateState(
+        {
+          isInPiP: true,
+          pipWindow: this.pipWindow,
+        },
+        'PictureInPictureManager'
+      );
+
       this.setupPiPWindow();
       this.updatePiPButton();
       this.log('📺 Entered Document Picture-in-Picture mode');
@@ -98,6 +94,7 @@ export class PictureInPictureManager extends BaseManager {
 
     window.documentPictureInPicture.addEventListener('leave', (event) => {
       this.log('📺 Left Document Picture-in-Picture mode');
+      this.log('📺 Leave event details:', event);
 
       // Move elements back BEFORE clearing pipWindow reference
       this.moveElementsBackToMainWindow();
@@ -123,6 +120,14 @@ export class PictureInPictureManager extends BaseManager {
       this.pipWindow = null;
     });
 
+    // Add backup event listener for window close (in case 'leave' event doesn't fire)
+    window.addEventListener('beforeunload', () => {
+      if (this.isInPiP && this.pipWindow && !this.pipWindow.closed) {
+        this.log('📺 Window closing - moving elements back as backup');
+        this.moveElementsBackToMainWindow();
+      }
+    });
+
     this.updatePiPButton();
     this.log('📺 Document Picture-in-Picture initialized');
 
@@ -131,6 +136,52 @@ export class PictureInPictureManager extends BaseManager {
       this.log('📺 Manual PiP initialization triggered');
       this.initializePiP();
     };
+
+    // Add a manual method to force move elements back (for debugging)
+    window.forceMoveElementsBack = () => {
+      this.log('📺 Force moving elements back triggered');
+      this.moveElementsBackToMainWindow();
+    };
+
+    // Add periodic check for PiP window state (fallback)
+    this.pipCheckInterval = setInterval(() => {
+      if (this.isInPiP && this.pipWindow && this.pipWindow.closed) {
+        this.log('📺 PiP window closed detected by periodic check');
+        this.handlePiPClose();
+      }
+    }, 1000);
+  }
+
+  /**
+   * Handle PiP window close (centralized cleanup)
+   */
+  handlePiPClose() {
+    this.log('📺 Handling PiP close...');
+
+    // Move elements back
+    this.moveElementsBackToMainWindow();
+
+    // Update state
+    this.isInPiP = false;
+    this.updatePiPButton();
+
+    // Update StateManager
+    stateManager.updateState(
+      {
+        isInPiP: false,
+        pipWindow: null,
+      },
+      'PictureInPictureManager'
+    );
+
+    // Clear PiP elements from StateManager
+    stateManager.clearPiPElements();
+
+    // Clear references
+    this.pipWindow = null;
+    this.savedDimensions = null;
+
+    this.log('📺 PiP close handled successfully');
   }
 
   /**
@@ -141,30 +192,23 @@ export class PictureInPictureManager extends BaseManager {
     this.log(`📺 Current PiP state: ${this.isInPiP}`);
 
     try {
-      // Early return if there's already a Picture-in-Picture window open
-      if (window.documentPictureInPicture.window) {
+      // Check if we're currently in PiP mode
+      if (this.isInPiP && this.pipWindow && !this.pipWindow.closed) {
         this.log('📺 Closing existing PiP window...');
-        this.moveElementsBackToMainWindow();
-        this.savedDimensions = null; // Clear saved dimensions
-
-        // Update state before closing (since 'leave' event won't fire for programmatic close)
-        this.isInPiP = false;
-        this.updatePiPButton();
-
-        // Update state in StateManager
-        stateManager.updateState(
-          {
-            isInPiP: false,
-            pipWindow: null,
-          },
-          'PictureInPictureManager'
+        this.log('📺 pipWindow exists:', !!this.pipWindow);
+        this.log('📺 pipWindow closed:', this.pipWindow.closed);
+        this.log(
+          '📺 documentPictureInPicture.window exists:',
+          !!window.documentPictureInPicture.window
         );
 
-        // Clear PiP elements from StateManager
-        stateManager.clearPiPElements();
+        // Use centralized close handler
+        this.handlePiPClose();
 
-        window.documentPictureInPicture.window.close();
-        this.pipWindow = null;
+        // Close the PiP window
+        if (window.documentPictureInPicture.window) {
+          window.documentPictureInPicture.window.close();
+        }
         return;
       }
 
@@ -217,9 +261,7 @@ export class PictureInPictureManager extends BaseManager {
       const finalWidth = Math.max(this.savedDimensions.displayWidth, minWidth);
       const finalHeight = Math.max(totalHeight, minHeight);
 
-      this.log(
-        `📺 Requesting PiP window: width=${finalWidth}, height=${finalHeight}`
-      );
+      this.log(`📺 Requesting PiP window: width=${finalWidth}, height=${finalHeight}`);
 
       // Request Document PiP window with saved dimensions
       this.pipWindow = await window.documentPictureInPicture.requestWindow({
@@ -250,9 +292,7 @@ export class PictureInPictureManager extends BaseManager {
     // Copy style sheets over from the initial document so that the teleprompter looks the same
     [...document.styleSheets].forEach((styleSheet) => {
       try {
-        const cssRules = [...styleSheet.cssRules]
-          .map((rule) => rule.cssText)
-          .join('');
+        const cssRules = [...styleSheet.cssRules].map((rule) => rule.cssText).join('');
         const style = document.createElement('style');
         style.textContent = cssRules;
         pipDoc.head.appendChild(style);
@@ -269,8 +309,7 @@ export class PictureInPictureManager extends BaseManager {
     // Move elements to PiP window (MDN approach)
     // This ensures perfect synchronization since elements are the same
     this.log(
-      `📺 Moving elements to PiP: controls=${!!this
-        .teleprompterControls}, display=${!!this
+      `📺 Moving elements to PiP: controls=${!!this.teleprompterControls}, display=${!!this
         .teleprompterDisplay}, attachment=${!!this.teleprompterAttachment}`
     );
 
@@ -294,9 +333,7 @@ export class PictureInPictureManager extends BaseManager {
 
     // Force height recalculation and scroll position after moving to PiP window
     setTimeout(() => {
-      this.log(
-        '📺 PiP window elements initialized with proper height and scroll position'
-      );
+      this.log('📺 PiP window elements initialized with proper height and scroll position');
     }, 50);
 
     // No need to set up event listeners since we moved the original elements
@@ -304,7 +341,11 @@ export class PictureInPictureManager extends BaseManager {
 
     // Note: PiP windows cannot be programmatically resized due to browser security restrictions
 
-    // No need for pagehide listener - we use the 'leave' event instead (MDN approach)
+    // Add beforeunload listener to PiP window to handle close button
+    this.pipWindow.addEventListener('beforeunload', () => {
+      this.log('📺 PiP window beforeunload event - moving elements back');
+      this.handlePiPClose();
+    });
 
     this.log('📺 PiP window setup complete');
   }
@@ -452,34 +493,30 @@ export class PictureInPictureManager extends BaseManager {
    */
   moveElementsBackToMainWindow() {
     this.log('📺 Moving elements back to main window...');
+    this.log('📺 Current pipWindow state:', this.pipWindow);
+    this.log('📺 pipWindow closed?', this.pipWindow ? this.pipWindow.closed : 'no pipWindow');
 
     // Check if elements exist and are in PiP window
-    if (
-      !this.teleprompterControls ||
-      !this.teleprompterDisplay ||
-      !this.teleprompterAttachment
-    ) {
+    if (!this.teleprompterControls || !this.teleprompterDisplay || !this.teleprompterAttachment) {
       this.log('⚠️ Elements not found, cannot move back');
+      this.log('📺 Controls:', !!this.teleprompterControls);
+      this.log('📺 Display:', !!this.teleprompterDisplay);
+      this.log('📺 Attachment:', !!this.teleprompterAttachment);
       return;
     }
 
     // Check if elements are actually in PiP window
     const controlsInPiP =
-      this.pipWindow &&
-      this.pipWindow.document.body.contains(this.teleprompterControls);
+      this.pipWindow && this.pipWindow.document.body.contains(this.teleprompterControls);
     const displayInPiP =
-      this.pipWindow &&
-      this.pipWindow.document.body.contains(this.teleprompterDisplay);
+      this.pipWindow && this.pipWindow.document.body.contains(this.teleprompterDisplay);
     const attachmentInPiP =
-      this.pipWindow &&
-      this.pipWindow.document.body.contains(this.teleprompterAttachment);
+      this.pipWindow && this.pipWindow.document.body.contains(this.teleprompterAttachment);
 
     // Check if elements are already in main window
     const controlsInMain = document.body.contains(this.teleprompterControls);
     const displayInMain = document.body.contains(this.teleprompterDisplay);
-    const attachmentInMain = document.body.contains(
-      this.teleprompterAttachment
-    );
+    const attachmentInMain = document.body.contains(this.teleprompterAttachment);
 
     this.log(
       `📺 Elements in PiP: controls=${controlsInPiP}, display=${displayInPiP}, attachment=${attachmentInPiP}`
@@ -525,38 +562,24 @@ export class PictureInPictureManager extends BaseManager {
         }
         if (displayInPiP) {
           // Insert display after controls
-          const controlsElement = mainContainer.querySelector(
-            '#teleprompterControls'
-          );
+          const controlsElement = mainContainer.querySelector('#teleprompterControls');
           if (controlsElement) {
-            controlsElement.insertAdjacentElement(
-              'afterend',
-              this.teleprompterDisplay
-            );
+            controlsElement.insertAdjacentElement('afterend', this.teleprompterDisplay);
             this.log('📺 Display inserted after controls');
           } else {
             mainContainer.append(this.teleprompterDisplay);
-            this.log(
-              '📺 Display appended to main container (controls not found)'
-            );
+            this.log('📺 Display appended to main container (controls not found)');
           }
         }
         if (attachmentInPiP) {
           // Insert attachment after display
-          const displayElement = mainContainer.querySelector(
-            '#teleprompterDisplay'
-          );
+          const displayElement = mainContainer.querySelector('#teleprompterDisplay');
           if (displayElement) {
-            displayElement.insertAdjacentElement(
-              'afterend',
-              this.teleprompterAttachment
-            );
+            displayElement.insertAdjacentElement('afterend', this.teleprompterAttachment);
             this.log('📺 Attachment inserted after display');
           } else {
             mainContainer.append(this.teleprompterAttachment);
-            this.log(
-              '📺 Attachment appended to main container (display not found)'
-            );
+            this.log('📺 Attachment appended to main container (display not found)');
           }
         }
       } else {
@@ -583,13 +606,9 @@ export class PictureInPictureManager extends BaseManager {
     this.pipMovedAttachment = null;
 
     // Verify elements are in main window DOM
-    const controlsInMainAfter = document.body.contains(
-      this.teleprompterControls
-    );
+    const controlsInMainAfter = document.body.contains(this.teleprompterControls);
     const displayInMainAfter = document.body.contains(this.teleprompterDisplay);
-    const attachmentInMainAfter = document.body.contains(
-      this.teleprompterAttachment
-    );
+    const attachmentInMainAfter = document.body.contains(this.teleprompterAttachment);
 
     this.log(
       `📺 Elements in main window after move: controls=${controlsInMainAfter}, display=${displayInMainAfter}, attachment=${attachmentInMainAfter}`
@@ -608,30 +627,15 @@ export class PictureInPictureManager extends BaseManager {
 
     this.log('📺 Setting up PiP event listeners...');
 
-    // Start button
-    const startButton = this.pipClonedControls.querySelector('#startButton');
-    if (startButton) {
-      startButton.addEventListener('click', (event) => {
-        this.log('📺 PiP Start button clicked');
+    // Toggle button
+    const toggleButton = this.pipClonedControls.querySelector('#toggleButton');
+    if (toggleButton) {
+      toggleButton.addEventListener('click', (event) => {
+        this.log('📺 PiP Toggle button clicked');
         // Trigger the same action in main window
-        const mainStartButton =
-          this.teleprompterControls.querySelector('#startButton');
-        if (mainStartButton) {
-          mainStartButton.click();
-        }
-      });
-    }
-
-    // Stop button
-    const stopButton = this.pipClonedControls.querySelector('#stopButton');
-    if (stopButton) {
-      stopButton.addEventListener('click', (event) => {
-        this.log('📺 PiP Stop button clicked');
-        // Trigger the same action in main window
-        const mainStopButton =
-          this.teleprompterControls.querySelector('#stopButton');
-        if (mainStopButton) {
-          mainStopButton.click();
+        const mainToggleButton = this.teleprompterControls.querySelector('#toggleButton');
+        if (mainToggleButton) {
+          mainToggleButton.click();
         }
       });
     }
@@ -642,8 +646,7 @@ export class PictureInPictureManager extends BaseManager {
       resetButton.addEventListener('click', (event) => {
         this.log('📺 PiP Reset button clicked');
         // Trigger the same action in main window
-        const mainResetButton =
-          this.teleprompterControls.querySelector('#resetButton');
+        const mainResetButton = this.teleprompterControls.querySelector('#resetButton');
         if (mainResetButton) {
           mainResetButton.click();
         }
@@ -654,13 +657,9 @@ export class PictureInPictureManager extends BaseManager {
     const inputs = this.pipClonedControls.querySelectorAll('input, select');
     inputs.forEach((input) => {
       input.addEventListener('change', (event) => {
-        this.log(
-          `📺 PiP Input changed: ${input.id || input.name} = ${input.value}`
-        );
+        this.log(`📺 PiP Input changed: ${input.id || input.name} = ${input.value}`);
         // Find corresponding input in main window and sync
-        const mainInput = this.teleprompterControls.querySelector(
-          `#${input.id}`
-        );
+        const mainInput = this.teleprompterControls.querySelector(`#${input.id}`);
         if (mainInput) {
           mainInput.value = input.value;
           // Trigger change event on main input
@@ -676,26 +675,18 @@ export class PictureInPictureManager extends BaseManager {
    * Update content in the PiP window
    */
   updatePiPContent() {
-    if (!this.pipWindow || this.pipWindow.closed || !this.pipMovedDisplay)
-      return;
+    if (!this.pipWindow || this.pipWindow.closed || !this.pipMovedDisplay) return;
 
     // No need to sync content since elements are the same
     // Content updates automatically since we're using the original elements
-    this.log(
-      '📺 PiP content updated - using original elements (no sync needed)'
-    );
+    this.log('📺 PiP content updated - using original elements (no sync needed)');
   }
 
   /**
    * Synchronize content between main window and PiP window
    */
   syncPiPContent() {
-    if (
-      !this.pipClonedDisplay ||
-      !this.pipClonedControls ||
-      !this.pipClonedAttachment
-    )
-      return;
+    if (!this.pipClonedDisplay || !this.pipClonedControls || !this.pipClonedAttachment) return;
 
     // Sync teleprompter display content
     this.pipClonedDisplay.innerHTML = this.teleprompterDisplay.innerHTML;
@@ -706,8 +697,7 @@ export class PictureInPictureManager extends BaseManager {
 
     // Sync attachment content
     this.pipClonedAttachment.innerHTML = this.teleprompterAttachment.innerHTML;
-    this.pipClonedAttachment.style.display =
-      this.teleprompterAttachment.style.display;
+    this.pipClonedAttachment.style.display = this.teleprompterAttachment.style.display;
   }
 
   /**
@@ -717,8 +707,7 @@ export class PictureInPictureManager extends BaseManager {
     if (!this.pipClonedControls) return;
 
     // Sync button states
-    const mainStartBtn =
-      this.teleprompterControls.querySelector('#startButton');
+    const mainStartBtn = this.teleprompterControls.querySelector('#startButton');
     const mainStopBtn = this.teleprompterControls.querySelector('#stopButton');
     const pipStartBtn = this.pipClonedControls.querySelector('#startButton');
     const pipStopBtn = this.pipClonedControls.querySelector('#stopButton');
@@ -731,8 +720,7 @@ export class PictureInPictureManager extends BaseManager {
     }
 
     // Sync input values
-    const mainInputs =
-      this.teleprompterControls.querySelectorAll('input, select');
+    const mainInputs = this.teleprompterControls.querySelectorAll('input, select');
     const pipInputs = this.pipClonedControls.querySelectorAll('input, select');
 
     mainInputs.forEach((mainInput, index) => {
@@ -749,9 +737,7 @@ export class PictureInPictureManager extends BaseManager {
   updatePiPAttachmentDisplay(currentPosition, scriptWords, textSize) {
     if (!this.pipWindow || this.pipWindow.closed) return;
 
-    this.log(
-      `📺 Updating attachment display in PiP - position: ${currentPosition}`
-    );
+    this.log(`📺 Updating attachment display in PiP - position: ${currentPosition}`);
 
     // Sync attachment content from main window to PiP window
     this.syncPiPContent();
@@ -770,25 +756,20 @@ export class PictureInPictureManager extends BaseManager {
    * Update PiP language settings state
    */
   updatePiPLanguageSettingsState(isListening) {
-    if (!this.pipWindow || this.pipWindow.closed || !this.pipClonedControls)
-      return;
+    if (!this.pipWindow || this.pipWindow.closed || !this.pipClonedControls) return;
 
-    const primaryLanguage =
-      this.pipClonedControls.querySelector('#primaryLanguage');
+    const primaryLanguage = this.pipClonedControls.querySelector('#primaryLanguage');
 
     if (primaryLanguage) {
       primaryLanguage.disabled = isListening;
       if (isListening) {
         primaryLanguage.title = 'Language settings disabled while listening';
       } else {
-        primaryLanguage.title =
-          'Select primary language for speech recognition';
+        primaryLanguage.title = 'Select primary language for speech recognition';
       }
     }
 
-    this.log(
-      `🌍 PiP Language settings ${isListening ? 'disabled' : 'enabled'}`
-    );
+    this.log(`🌍 PiP Language settings ${isListening ? 'disabled' : 'enabled'}`);
   }
 
   /**
@@ -809,6 +790,12 @@ export class PictureInPictureManager extends BaseManager {
    * Cleanup PiP resources
    */
   cleanup() {
+    // Clear the periodic check interval
+    if (this.pipCheckInterval) {
+      clearInterval(this.pipCheckInterval);
+      this.pipCheckInterval = null;
+    }
+
     if (this.pipWindow && !this.pipWindow.closed) {
       this.pipWindow.close();
     }

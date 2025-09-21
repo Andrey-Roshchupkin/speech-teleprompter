@@ -33,9 +33,7 @@
       <div class="teleprompter-section">
         <div class="teleprompter-header">
           <h3>📺 Teleprompter Display</h3>
-          <button class="pip-button" title="Open in Picture-in-Picture" @click="handlePiPToggle">
-            📺 PiP
-          </button>
+          <!-- PiP button temporarily removed from DOM but code remains -->
         </div>
 
         <!-- Teleprompter Controls Component -->
@@ -252,21 +250,36 @@ import { useFuzzyMatcher } from '@/composables/useFuzzyMatcher'
 import { useTeleprompterDisplay } from '@/composables/useTeleprompterDisplay'
 import { useLocalStorage } from '@/composables/useLocalStorage'
 import { useLogManager } from '@/composables/useLogManager'
+import { usePictureInPicture } from '@/composables/usePictureInPicture'
+import { useBroadcastSync } from '@/composables/useBroadcastSync'
+import { useTeleprompterStore } from '@/stores/teleprompter'
 
 // Initialize composables
 const logManager = useLogManager()
+const store = useTeleprompterStore()
+const { syncState, syncButtonClick } = useBroadcastSync()
+const { isPiPSupported, isInPiP, togglePiP, syncPiPContent, syncButtonStates } =
+  usePictureInPicture()
+
 const localStorage = useLocalStorage({
   onSave: (settings) => {
     logManager.info('Settings saved to localStorage')
+    // Sync settings to store
+    store.updateSettings(settings)
+    syncState()
   },
 })
 
 const teleprompterDisplay = useTeleprompterDisplay({
   onPositionChange: (position) => {
     logManager.info(`Position changed: ${position}`)
-    // Scroll to current position after DOM update
+    // Update store and sync
+    store.updatePosition(position)
+    syncState()
+    // Sync PiP content
     nextTick(() => {
       scrollToCurrentPosition()
+      syncPiPContent()
     })
   },
   onProgressChange: (progress) => {
@@ -289,12 +302,15 @@ const speechRecognition = useSpeechRecognition({
   onStatusChange: (status) => {
     logManager.info(`Speech status: ${status.status}`)
     handleStatusChange(status)
+    // Update store and sync
+    store.updateSpeechState(status.status === 'listening', status.status)
+    syncState()
+    syncButtonStates()
   },
 })
 
 // State
 const isListening = ref(false)
-const isInPiP = ref(false)
 const selectedLanguage = ref('en-US')
 const finalTranscript = ref('')
 const interimTranscript = ref('')
@@ -500,6 +516,24 @@ onMounted(() => {
   nextTick(() => {
     updateFirstLineCoordinates()
   })
+
+  // Listen for PiP button events
+  const handlePiPToggleEvent = () => {
+    handleToggleSpeech()
+  }
+
+  const handlePiPResetEvent = () => {
+    handleResetSpeech()
+  }
+
+  window.addEventListener('teleprompter-toggle-speech', handlePiPToggleEvent)
+  window.addEventListener('teleprompter-reset', handlePiPResetEvent)
+
+  // Cleanup on unmount
+  return () => {
+    window.removeEventListener('teleprompter-toggle-speech', handlePiPToggleEvent)
+    window.removeEventListener('teleprompter-reset', handlePiPResetEvent)
+  }
 })
 
 // Watch for settings changes and auto-save
@@ -531,6 +565,8 @@ const handleToggleSpeech = (): void => {
   } else {
     speechRecognition.start()
   }
+  // Sync button state
+  syncButtonClick('toggleButton', isListening.value ? 'stop' : 'start')
 }
 
 const handleResetSpeech = (): void => {
@@ -539,6 +575,9 @@ const handleResetSpeech = (): void => {
   fuzzyMatcher.reset()
   finalTranscript.value = ''
   interimTranscript.value = ''
+
+  // Reset store
+  store.reset()
 
   // Reset scroll state
   topLinePosition.value = 0
@@ -551,11 +590,21 @@ const handleResetSpeech = (): void => {
       behavior: 'smooth',
     })
   }
+
+  // Sync state
+  syncState()
+  syncButtonClick('resetButton', 'reset')
+
+  logManager.info('Speech recognition and teleprompter reset')
 }
 
-const handlePiPToggle = (): void => {
-  isInPiP.value = !isInPiP.value
-  // TODO: Implement PiP functionality
+const handlePiPToggle = async (): Promise<void> => {
+  try {
+    await togglePiP()
+    logManager.info(`PiP toggled: ${isInPiP.value ? 'opened' : 'closed'}`)
+  } catch (error) {
+    logManager.error(`Failed to toggle PiP: ${error}`)
+  }
 }
 
 const handleScrollUp = (): void => {
@@ -583,6 +632,9 @@ const handleLanguageChange = (newLanguage: string): void => {
 const handleScriptChange = (event: Event): void => {
   const target = event.target as HTMLTextAreaElement
   teleprompterDisplay.updateScript(target.value)
+  // Update store and sync
+  store.updateScript(target.value)
+  syncState()
 }
 
 const handleLogLevelChange = (newLevel: string): void => {
