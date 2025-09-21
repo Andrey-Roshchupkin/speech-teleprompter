@@ -8,14 +8,17 @@
       <section class="footer-section" aria-labelledby="app-description">
         <h4 id="app-description">Speech Teleprompter</h4>
         <p>
-          Free real-time speech recognition teleprompter powered by Web Speech API. Perfect for
-          presentations, speeches, and content creation.
+          Free real-time speech recognition teleprompter powered by Web Speech
+          API. Perfect for presentations, speeches, and content creation.
         </p>
       </section>
 
       <section class="footer-section" aria-labelledby="author-links">
         <h4 id="author-links">Author</h4>
-        <nav class="author-links" aria-label="Author social media and blog links">
+        <nav
+          class="author-links"
+          aria-label="Author social media and blog links"
+        >
           <BaseLink
             href="https://www.linkedin.com/in/andrey-roshchupkin"
             target="_blank"
@@ -56,14 +59,15 @@
 
     <div class="footer-bottom" role="contentinfo">
       <p>
-        &copy; 2025 Andrey Roshchupkin. Free Speech Teleprompter with real-time speech recognition.
+        &copy; 2025 Andrey Roshchupkin. Free Speech Teleprompter with real-time
+        speech recognition.
       </p>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import BaseLink from '@/components/base/BaseLink.vue'
+import BaseLink from '@/components/base/BaseLink.vue';
 </script>
 
 <style scoped>
@@ -76,12 +80,16 @@ import BaseLink from '@/components/base/BaseLink.vue'
 }
 
 .footer-content {
-  max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 30px;
   margin-bottom: 20px;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
 }
 
 .footer-section h4 {
@@ -119,24 +127,5 @@ import BaseLink from '@/components/base/BaseLink.vue'
   font-size: 13px;
   color: var(--text-color-secondary);
   line-height: 1.5;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .footer-content {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .author-links {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .author-links .base-link {
-    flex: 1;
-    min-width: 120px;
-    justify-content: center;
-  }
 }
 </style>

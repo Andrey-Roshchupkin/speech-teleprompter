@@ -15,7 +15,7 @@
     "test:coverage": "vitest --coverage",
     "lint": "eslint . --fix",
     "type-check": "vue-tsc --build",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && git add dist && git commit -m 'Deploy to main' && git push origin main"
   },
   "dependencies": {
     "pinia": "^3.0.3",
