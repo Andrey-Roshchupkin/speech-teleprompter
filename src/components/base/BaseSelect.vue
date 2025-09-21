@@ -2,7 +2,9 @@
   <div :class="['form-group', { 'form-group--error': hasError }, props.class]">
     <label v-if="label" :for="id" :class="labelClasses">
       {{ label }}
-      <span v-if="required" class="required-indicator" aria-hidden="true">*</span>
+      <span v-if="required" class="required-indicator" aria-hidden="true"
+        >*</span
+      >
     </label>
     <select
       :id="id"
@@ -47,78 +49,78 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { type SelectSize, type LanguageOption } from '@/types/global'
+import { computed } from 'vue';
+import { type SelectSize, type LanguageOption } from '@/types/global';
 
 interface SelectOption extends LanguageOption {
-  disabled?: boolean
+  disabled?: boolean;
 }
 
 interface Props {
-  id: string
-  modelValue: string
-  label?: string
-  placeholder?: string
-  helpText?: string
-  errorMessage?: string
-  required?: boolean
-  disabled?: boolean
-  size?: SelectSize
-  options: SelectOption[]
-  class?: string
-  'aria-label'?: string
-  'aria-live'?: 'off' | 'polite' | 'assertive'
+  id: string;
+  modelValue: string;
+  label?: string;
+  placeholder?: string;
+  helpText?: string;
+  errorMessage?: string;
+  required?: boolean;
+  disabled?: boolean;
+  size?: SelectSize;
+  options: SelectOption[];
+  class?: string;
+  'aria-label'?: string;
+  'aria-live'?: 'off' | 'polite' | 'assertive';
 }
 
 const props = withDefaults(defineProps<Props>(), {
   required: false,
   disabled: false,
   size: 'medium',
-})
+});
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
-  (e: 'change', event: Event): void
-  (e: 'blur', event: FocusEvent): void
-  (e: 'focus', event: FocusEvent): void
-  (e: 'keydown', event: KeyboardEvent): void
-}>()
+  (e: 'update:modelValue', value: string): void;
+  (e: 'change', event: Event): void;
+  (e: 'blur', event: FocusEvent): void;
+  (e: 'focus', event: FocusEvent): void;
+  (e: 'keydown', event: KeyboardEvent): void;
+}>();
 
 // Computed properties
-const hasError = computed((): boolean => Boolean(props.errorMessage))
+const hasError = computed((): boolean => Boolean(props.errorMessage));
 
 const labelClasses = computed((): string => {
-  const base = 'form-label'
-  const size = `form-label--${props.size}`
-  const required = props.required ? 'form-label--required' : ''
-  return [base, size, required].filter(Boolean).join(' ')
-})
+  const base = 'form-label';
+  const size = `form-label--${props.size}`;
+  const required = props.required ? 'form-label--required' : '';
+  return [base, size, required].filter(Boolean).join(' ');
+});
 
 const selectClasses = computed((): string => {
-  const base = 'form-select'
-  const size = `form-select--${props.size}`
-  const error = hasError.value ? 'form-select--error' : ''
-  const disabled = props.disabled ? 'form-select--disabled' : ''
-  return [base, size, error, disabled].filter(Boolean).join(' ')
-})
+  const base = 'form-select';
+  const size = `form-select--${props.size}`;
+  const error = hasError.value ? 'form-select--error' : '';
+  const disabled = props.disabled ? 'form-select--disabled' : '';
+  return [base, size, error, disabled].filter(Boolean).join(' ');
+});
 
 const ariaDescribedby = computed((): string => {
-  const ids: string[] = []
+  const ids: string[] = [];
   if (props.helpText && !hasError.value) {
-    ids.push(`${props.id}-help`)
+    ids.push(`${props.id}-help`);
   }
   if (props.errorMessage) {
-    ids.push(`${props.id}-error`)
+    ids.push(`${props.id}-error`);
   }
-  return ids.join(' ')
-})
+  return ids.join(' ');
+});
 
 // Event handlers
 const handleChange = (event: Event): void => {
-  const target = event.target as HTMLSelectElement
-  emit('update:modelValue', target.value)
-  emit('change', event)
-}
+  const target = event.target as HTMLSelectElement;
+  emit('update:modelValue', target.value);
+  emit('change', event);
+};
 </script>
 
 <style scoped>
@@ -161,7 +163,7 @@ const handleChange = (event: Event): void => {
 
 .form-select {
   width: 100%;
-  padding: 0.75rem;
+  padding: 15.75rem;
   border: 2px solid var(--border-color);
   border-radius: 0.5rem;
   background-color: var(--bg-primary);
@@ -178,12 +180,12 @@ const handleChange = (event: Event): void => {
 }
 
 .form-select--small {
-  padding: 0.5rem 0.75rem;
+  padding: 15.5rem 0.75rem;
   font-size: 0.875rem;
 }
 
 .form-select--medium {
-  padding: 0.75rem;
+  padding: 15.75rem;
   font-size: 1rem;
 }
 

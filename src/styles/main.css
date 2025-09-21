@@ -23,7 +23,7 @@ html {
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 15;
   background: var(--bg-gradient);
   min-height: 100vh;
   overflow-y: auto;
@@ -121,6 +121,10 @@ p {
 
 .teleprompter-section:last-child {
   margin-bottom: 0;
+}
+
+.teleprompter-pip-wrapper {
+  overflow: hidden;
 }
 
 /* ============================================================================
@@ -371,7 +375,7 @@ p {
 
 .teleprompter-highlight {
   background: var(--teleprompter-highlight);
-  padding: 0;
+  padding: 15;
   border-radius: 0;
   animation: teleprompter-pulse 1s infinite;
   display: inline-block;

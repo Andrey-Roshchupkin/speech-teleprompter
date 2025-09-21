@@ -29,114 +29,127 @@
     </div>
 
     <!-- Teleprompter Display Panel -->
-    <div class="teleprompter-right-panel">
+    <div class="teleprompter-panel">
       <!-- Teleprompter Display Section -->
-      <div class="teleprompter-section">
-        <div class="teleprompter-header">
-          <h3>📺 Teleprompter Display</h3>
-          <!-- PiP button temporarily removed from DOM but code remains -->
-        </div>
-
-        <!-- Teleprompter Controls Component -->
-        <div class="teleprompter-controls-component">
-          <div class="teleprompter-controls">
+      <div class="teleprompter-pip-wrapper">
+        <div class="teleprompter-section">
+          <div class="teleprompter-header">
+            <h3>📺 Teleprompter Display</h3>
             <button
-              class="teleprompter-start-button"
-              :class="{ listening: isListening, disabled: !isSpeechSupported }"
-              :disabled="!isSpeechSupported"
-              @click="handleToggleSpeech"
+              id="pip-button"
+              class="pip-button"
+              :disabled="!isPiPSupported"
+              @click="handlePiPToggle"
+              aria-label="Toggle Picture-in-Picture mode"
             >
-              {{ isListening ? 'Stop' : 'Start' }}
-            </button>
-            <button
-              class="teleprompter-reset-button"
-              :class="{ disabled: !isSpeechSupported }"
-              :disabled="!isSpeechSupported"
-              @click="handleResetSpeech"
-            >
-              Reset
+              📺 PiP
             </button>
           </div>
 
-          <!-- Inline Settings -->
-          <div class="teleprompter-settings-inline">
-            <div class="setting-column">
-              <label for="linesToShow">Lines to Show</label>
-              <input
-                type="number"
-                id="linesToShow"
-                :value="settings.linesToShow"
-                @input="handleLinesToShowChange"
-                min="3"
-                max="10"
-              />
+          <!-- Teleprompter Controls Component -->
+          <div class="teleprompter-controls-component">
+            <div class="teleprompter-controls">
+              <button
+                class="teleprompter-start-button"
+                :class="{
+                  listening: isListening,
+                  disabled: !isSpeechSupported,
+                }"
+                :disabled="!isSpeechSupported"
+                @click="handleToggleSpeech"
+              >
+                {{ isListening ? 'Stop' : 'Start' }}
+              </button>
+              <button
+                class="teleprompter-reset-button"
+                :class="{ disabled: !isSpeechSupported }"
+                :disabled="!isSpeechSupported"
+                @click="handleResetSpeech"
+              >
+                Reset
+              </button>
             </div>
-            <div class="setting-column">
-              <label for="scrollTrigger">Scroll After Lines</label>
-              <input
-                type="number"
-                id="scrollTrigger"
-                :value="settings.scrollTrigger"
-                @input="handleScrollTriggerChange"
-                :min="1"
-                :max="settings.linesToShow - 1"
-              />
-            </div>
-            <div class="setting-column">
-              <label for="textSize">Text Size (px)</label>
-              <input
-                type="number"
-                id="textSize"
-                :value="settings.textSize"
-                @input="handleTextSizeChange"
-                min="12"
-                max="48"
-              />
+
+            <!-- Inline Settings -->
+            <div class="teleprompter-settings-inline">
+              <div class="setting-column">
+                <label for="linesToShow">Lines to Show</label>
+                <input
+                  type="number"
+                  id="linesToShow"
+                  :value="settings.linesToShow"
+                  @input="handleLinesToShowChange"
+                  min="3"
+                  max="10"
+                />
+              </div>
+              <div class="setting-column">
+                <label for="scrollTrigger">Scroll After Lines</label>
+                <input
+                  type="number"
+                  id="scrollTrigger"
+                  :value="settings.scrollTrigger"
+                  @input="handleScrollTriggerChange"
+                  :min="1"
+                  :max="settings.linesToShow - 1"
+                />
+              </div>
+              <div class="setting-column">
+                <label for="textSize">Text Size (px)</label>
+                <input
+                  type="number"
+                  id="textSize"
+                  :value="settings.textSize"
+                  @input="handleTextSizeChange"
+                  min="12"
+                  max="48"
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Teleprompter Display -->
-        <div
-          class="teleprompter-display"
-          :style="{ height: teleprompterDisplayHeight }"
-        >
+          <!-- Teleprompter Display -->
           <div
-            ref="teleprompterTextRef"
-            class="teleprompter-text"
-            :style="{ fontSize: settings.textSize + 'px' }"
+            class="teleprompter-display"
+            :style="{ height: teleprompterDisplayHeight }"
           >
-            <!-- Text before pointer (read text) -->
-            <span v-if="textBeforePointer" class="teleprompter-matched">
-              {{ textBeforePointer }}
-            </span>
+            <div
+              ref="teleprompterTextRef"
+              class="teleprompter-text"
+              :style="{ fontSize: settings.textSize + 'px' }"
+            >
+              <!-- Text before pointer (read text) -->
+              <span v-if="textBeforePointer" class="teleprompter-matched">
+                {{ textBeforePointer }}
+              </span>
 
-            <!-- Current word (pointer) -->
-            <span v-if="currentWord" class="teleprompter-highlight">
-              {{ currentWord }}
-            </span>
+              <!-- Current word (pointer) -->
+              <span v-if="currentWord" class="teleprompter-highlight">
+                {{ currentWord }}
+              </span>
 
-            <!-- Text after pointer (unread text) -->
-            <span v-if="textAfterPointer">
-              {{ textAfterPointer }}
-            </span>
+              <!-- Text after pointer (unread text) -->
+              <span v-if="textAfterPointer">
+                {{ textAfterPointer }}
+              </span>
+            </div>
           </div>
-        </div>
 
-        <!-- Attachment Display -->
-        <AttachmentDisplay
-          :current-attachment="
-            teleprompterDisplay.attachmentManager.currentAttachment.value
-          "
-          :text-size="settings.textSize"
-        />
+          <!-- Attachment Display -->
+          <AttachmentDisplay
+            :current-attachment="
+              teleprompterDisplay.attachmentManager.currentAttachment.value
+            "
+            :text-size="settings.textSize"
+          />
 
-        <!-- Progress Bar -->
-        <div class="progress-bar">
-          <div
-            class="progress-fill"
-            :style="{ width: progressPercentage + '%' }"
-          ></div>
+          <!-- Progress Bar -->
+          <div class="progress-bar">
+            <div
+              class="progress-fill"
+              :style="{ width: progressPercentage + '%' }"
+            ></div>
+          </div>
         </div>
       </div>
 
@@ -287,7 +300,15 @@ import { useTeleprompterStore } from '@/stores/teleprompter';
 const logManager = useLogManager();
 const store = useTeleprompterStore();
 const { syncState, syncButtonClick } = useBroadcastSync();
-const { syncPiPContent, syncButtonStates } = usePictureInPicture();
+const {
+  isPiPSupported,
+  isInPiP,
+  pipWindow,
+  togglePiP,
+  syncPiPContent,
+  syncScrollPosition,
+  syncButtonStates,
+} = usePictureInPicture();
 
 const localStorage = useLocalStorage({
   onSave: (settings) => {
@@ -304,10 +325,14 @@ const teleprompterDisplay = useTeleprompterDisplay({
     // Update store and sync
     store.updatePosition(position);
     syncState();
-    // Sync PiP content
+    // Sync PiP content and scroll position
     nextTick(() => {
-      scrollToCurrentPosition();
+      autoScroll();
       syncPiPContent();
+      // Sync scroll position in PiP if it's open
+      if (isInPiP.value && pipWindow.value && !pipWindow.value.closed) {
+        syncScrollPosition();
+      }
     });
   },
   onProgressChange: (progress) => {
@@ -361,62 +386,120 @@ const lineHeight = ref<number | null>(null);
 const topLinePosition = ref(0);
 const lastScrollPosition = ref(0);
 
+// Helper function to get the correct teleprompter text element
+const getTeleprompterTextElement = (): HTMLElement | null => {
+  // If we're in PiP mode, get the element from PiP window
+  if (isInPiP.value && pipWindow.value && !pipWindow.value.closed) {
+    return pipWindow.value.document.querySelector(
+      '.teleprompter-text'
+    ) as HTMLElement;
+  }
+
+  // In main window, find the element in the wrapper container
+  const wrapper = document.querySelector('.teleprompter-pip-wrapper');
+  if (wrapper) {
+    return wrapper.querySelector('.teleprompter-text') as HTMLElement;
+  }
+
+  // Fallback to ref if wrapper not found
+  return teleprompterTextRef.value;
+};
+
+// Helper function to get the main window teleprompter text element (for coordinate calculations)
+const getMainTeleprompterTextElement = (): HTMLElement | null => {
+  // Always get the element from the main window wrapper, regardless of PiP state
+  const wrapper = document.querySelector('.teleprompter-pip-wrapper');
+  if (wrapper) {
+    return wrapper.querySelector('.teleprompter-text') as HTMLElement;
+  }
+
+  // Fallback to ref if wrapper not found
+  return teleprompterTextRef.value;
+};
+
 // Update first line coordinates (call when text size changes)
 const updateFirstLineCoordinates = (): void => {
-  if (!teleprompterTextRef.value) return;
+  // Always use the main window element for coordinate calculations
+  const teleprompterTextElement = getMainTeleprompterTextElement();
+  if (!teleprompterTextElement) {
+    logManager.debug(
+      '📏 updateFirstLineCoordinates: No teleprompter text element found'
+    );
+    return;
+  }
 
   // Get the first word element
-  const firstWordElement = teleprompterTextRef.value.querySelector('span');
+  const firstWordElement = teleprompterTextElement.querySelector('span');
   if (!firstWordElement) return;
 
   // Get absolute coordinates of first word
   const firstWordRect = firstWordElement.getBoundingClientRect();
-  const containerRect = teleprompterTextRef.value.getBoundingClientRect();
+  const containerRect = teleprompterTextElement.getBoundingClientRect();
 
   // Calculate middle Y of first line (relative to container)
   firstLineMiddleY.value =
     firstWordRect.top - containerRect.top + firstWordRect.height / 2;
 
-  // Calculate line height
-  lineHeight.value = firstWordRect.height;
+  // Calculate line height by finding the first word on the next line
+  const allSpans = teleprompterTextElement.querySelectorAll('span');
+  let lineHeightFound = false;
 
-  console.log(
-    `📏 First line coordinates updated: middleY=${firstLineMiddleY.value.toFixed(2)}, lineHeight=${lineHeight.value.toFixed(2)}`
+  for (let i = 1; i < allSpans.length; i++) {
+    const span = allSpans[i];
+    const spanRect = span.getBoundingClientRect();
+    const topDifference = spanRect.top - firstWordRect.top;
+
+    // If the span is on a different line (top difference > 10px)
+    if (topDifference > 10) {
+      lineHeight.value = topDifference;
+      lineHeightFound = true;
+      break;
+    }
+  }
+
+  if (!lineHeightFound) {
+    // Fallback: use font size * line height
+    lineHeight.value = parseInt(String(settings.value.textSize)) * 1.6;
+  }
+
+  logManager.debug(
+    `📏 First line coordinates updated: middleY=${firstLineMiddleY.value?.toFixed(2) || 'null'}, lineHeight=${lineHeight.value?.toFixed(2) || 'null'}`
   );
 };
 
-// Auto-scroll when reaching trigger point
+// Auto-scroll when pointer moves (speech recognition)
 const autoScroll = (): void => {
-  if (!teleprompterTextRef.value) return;
+  const teleprompterTextElement = getTeleprompterTextElement();
+  if (!teleprompterTextElement) return;
 
   // Check if we have first line coordinates
   if (firstLineMiddleY.value === null || lineHeight.value === null) {
-    console.log(
+    logManager.debug(
       '🔄 Auto-scroll: First line coordinates not available, updating...'
     );
     updateFirstLineCoordinates();
     if (firstLineMiddleY.value === null || lineHeight.value === null) {
-      console.log('🔄 Auto-scroll: Failed to get first line coordinates');
+      logManager.debug('🔄 Auto-scroll: Failed to get first line coordinates');
       return;
     }
   }
 
   // Find the currently highlighted word element
-  const currentWordElement = teleprompterTextRef.value.querySelector(
+  const currentWordElement = teleprompterTextElement.querySelector(
     '.teleprompter-highlight'
   );
   if (!currentWordElement) {
-    console.log('🔄 Auto-scroll: No highlighted word element found');
+    logManager.debug('🔄 Auto-scroll: No highlighted word element found');
     return;
   }
 
-  console.log(
+  logManager.debug(
     `🔄 Auto-scroll: Found highlighted element: "${currentWordElement.textContent}"`
   );
 
   // Get absolute coordinates of current word
   const wordRect = currentWordElement.getBoundingClientRect();
-  const containerRect = teleprompterTextRef.value.getBoundingClientRect();
+  const containerRect = teleprompterTextElement.getBoundingClientRect();
 
   // Calculate middle Y of current word (relative to container)
   const currentWordMiddleY =
@@ -428,7 +511,7 @@ const autoScroll = (): void => {
   const currentLine =
     Math.floor(lineDifference / (lineHeight.value - correction)) + 1;
 
-  console.log(
+  logManager.debug(
     `🔄 Auto-scroll: Coordinates - firstLineMiddleY=${firstLineMiddleY.value.toFixed(2)}, currentWordMiddleY=${currentWordMiddleY.toFixed(2)}, lineDifference=${lineDifference.toFixed(2)}, lineHeight=${lineHeight.value.toFixed(2)}, currentLine=${currentLine}`
   );
 
@@ -438,7 +521,7 @@ const autoScroll = (): void => {
     // Calculate scroll distance: difference between first line and current cursor position
     const scrollDistance = currentWordMiddleY - firstLineMiddleY.value;
 
-    console.log(
+    logManager.debug(
       `📜 Auto-scroll triggered! currentLine=${currentLine}, scrollTrigger=${settings.value.scrollTrigger}, scrollDistance=${scrollDistance.toFixed(2)}`
     );
 
@@ -446,12 +529,12 @@ const autoScroll = (): void => {
     topLinePosition.value += 1;
 
     // Perform smooth scroll animation using the original algorithm
-    const startScrollTop = teleprompterTextRef.value.scrollTop;
+    const startScrollTop = teleprompterTextElement.scrollTop;
     const targetScrollTop = startScrollTop + scrollDistance;
     const duration = 300; // Animation duration in milliseconds
     const startTime = performance.now();
 
-    console.log(
+    logManager.debug(
       `🎬 Starting smooth scroll: ${startScrollTop.toFixed(2)} → ${targetScrollTop.toFixed(2)} (distance: ${scrollDistance.toFixed(2)}px)`
     );
 
@@ -463,29 +546,42 @@ const autoScroll = (): void => {
       const easeOut = 1 - Math.pow(1 - progress, 3);
 
       const currentScrollTop = startScrollTop + scrollDistance * easeOut;
-      teleprompterTextRef.value!.scrollTop = currentScrollTop;
+      teleprompterTextElement.scrollTop = currentScrollTop;
       lastScrollPosition.value = currentScrollTop;
 
       if (progress < 1) {
         requestAnimationFrame(animateScroll);
       } else {
-        console.log(
-          `🎬 Smooth scroll completed: final scrollTop=${teleprompterTextRef.value!.scrollTop.toFixed(2)}`
+        logManager.debug(
+          `🎬 Smooth scroll completed: final scrollTop=${teleprompterTextElement.scrollTop.toFixed(2)}`
         );
       }
     };
 
     requestAnimationFrame(animateScroll);
   } else {
-    console.log(
+    logManager.debug(
       `🔄 Auto-scroll: No scroll needed (currentLine=${currentLine} <= scrollTrigger=${settings.value.scrollTrigger})`
     );
   }
 };
 
-// Scroll to current position
+// Initialize scroll position (for PiP open/close)
+const initScroll = (): void => {
+  const teleprompterTextElement = getTeleprompterTextElement();
+  if (!teleprompterTextElement) return;
+
+  // Update coordinates first
+  updateFirstLineCoordinates();
+
+  // Then use auto-scroll logic
+  autoScroll();
+};
+
+// Scroll to current position (legacy function)
 const scrollToCurrentPosition = (): void => {
-  if (!teleprompterTextRef.value) return;
+  const teleprompterTextElement = getTeleprompterTextElement();
+  if (!teleprompterTextElement) return;
 
   // Use auto-scroll logic instead of simple positioning
   autoScroll();
@@ -598,6 +694,10 @@ watch(
   }),
   (newSettings) => {
     localStorage.saveSettings(newSettings);
+    // Update coordinates when text size changes
+    nextTick(() => {
+      updateFirstLineCoordinates();
+    });
   },
   { deep: true }
 );
@@ -634,8 +734,9 @@ const handleResetSpeech = (): void => {
   lastScrollPosition.value = 0;
 
   // Scroll to top
-  if (teleprompterTextRef.value) {
-    teleprompterTextRef.value.scrollTo({
+  const teleprompterTextElement = getTeleprompterTextElement();
+  if (teleprompterTextElement) {
+    teleprompterTextElement.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
@@ -648,34 +749,29 @@ const handleResetSpeech = (): void => {
   logManager.info('Speech recognition and teleprompter reset');
 };
 
-// PiP functionality temporarily disabled but code preserved
-// const handlePiPToggle = async (): Promise<void> => {
-//   try {
-//     await togglePiP()
-//     logManager.info(`PiP toggled: ${isInPiP.value ? 'opened' : 'closed'}`)
-//   } catch (error) {
-//     logManager.error(`Failed to toggle PiP: ${error}`)
-//   }
-// }
+// PiP functionality
+const handlePiPToggle = async (): Promise<void> => {
+  try {
+    await togglePiP();
+    logManager.info(`PiP toggled: ${isInPiP.value ? 'opened' : 'closed'}`);
 
-// Scroll functionality temporarily disabled but code preserved
-// const handleScrollUp = (): void => {
-//   teleprompterDisplay.scrollUp()
-// }
-
-// const handleScrollDown = (): void => {
-//   teleprompterDisplay.scrollDown()
-// }
-
-// Settings update functionality temporarily disabled but code preserved
-// const handleSettingsUpdate = (newSettings: any): void => {
-//   teleprompterDisplay.updateSettings({
-//     linesToShow: newSettings.linesToShow,
-//     scrollTrigger: newSettings.scrollTrigger,
-//     textSize: newSettings.textSize,
-//   })
-//   fuzzyMatcher.setPrecision(newSettings.fuzzyPrecision)
-// }
+    if (isInPiP.value) {
+      // Wait for elements to be ready inside PiP
+      await nextTick();
+      updateFirstLineCoordinates();
+      // Call auto-scroll when elements are ready inside PiP
+      autoScroll();
+    } else {
+      // Wait for elements to be ready after returning to main window
+      await nextTick();
+      updateFirstLineCoordinates();
+      // Don't call auto-scroll here - it will be called by onPositionChange
+      // when processing final speech output
+    }
+  } catch (error) {
+    logManager.error(`Failed to toggle PiP: ${error}`);
+  }
+};
 
 // Language change functionality
 const handleLanguageChange = (event: Event): void => {
@@ -692,11 +788,6 @@ const handleScriptChange = (event: Event): void => {
   store.updateScript(target.value);
   syncState();
 };
-
-// Log level change functionality temporarily disabled but code preserved
-// const handleLogLevelChange = (newLevel: string): void => {
-//   logLevel.value = newLevel
-// }
 
 // Settings change handlers
 const handleLinesToShowChange = (event: Event): void => {
@@ -1025,7 +1116,7 @@ const handleStatusChange = (status: any): void => {
   border-radius: 10px;
   font-family: 'Courier New', monospace;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   min-height: 0;
   overflow: hidden;
   transition: height 0.3s ease;

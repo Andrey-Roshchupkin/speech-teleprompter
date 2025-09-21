@@ -26,6 +26,9 @@ export const useTeleprompterStore = defineStore('teleprompter', () => {
   const lastScrollPosition = ref(0);
   const scrollCount = ref(0);
 
+  // PiP scroll synchronization
+  const pipScrollPosition = ref(0);
+
   // Attachment state
   const attachments = ref<Attachment[]>([]);
   const currentAttachment = ref<Attachment | null>(null);
@@ -88,6 +91,59 @@ export const useTeleprompterStore = defineStore('teleprompter', () => {
   const updatePiPState = (inPiP: boolean, window: Window | null = null) => {
     isInPiP.value = inPiP;
     pipWindow.value = window;
+  };
+
+  // Calculate scroll position for PiP based on current word position
+  const calculatePiPScrollPosition = (
+    containerElement: HTMLElement
+  ): number => {
+    if (!containerElement || currentPosition.value < 0) return 0;
+
+    try {
+      // Find the highlighted word element
+      const highlightedWord = containerElement.querySelector(
+        '.teleprompter-highlight'
+      ) as HTMLElement;
+      if (!highlightedWord) return 0;
+
+      // Get the position of the highlighted word relative to the container
+      const wordRect = highlightedWord.getBoundingClientRect();
+      const containerRect = containerElement.getBoundingClientRect();
+
+      // Calculate the middle Y position of the highlighted word
+      const wordMiddleY =
+        wordRect.top - containerRect.top + wordRect.height / 2;
+
+      // Calculate the container height
+      const containerHeight = containerRect.height;
+
+      // Calculate the target scroll position to center the highlighted word
+      const targetScrollTop = wordMiddleY - containerHeight / 2;
+
+      // Store the calculated position
+      pipScrollPosition.value = Math.max(0, targetScrollTop);
+
+      return pipScrollPosition.value;
+    } catch (error) {
+      console.error('Error calculating PiP scroll position:', error);
+      return 0;
+    }
+  };
+
+  // Apply calculated scroll position to PiP window
+  const applyPiPScrollPosition = (pipWindow: Window): void => {
+    if (!pipWindow || pipWindow.closed) return;
+
+    try {
+      const pipTextElement = pipWindow.document.querySelector(
+        '.teleprompter-text'
+      ) as HTMLElement;
+      if (pipTextElement && pipScrollPosition.value > 0) {
+        pipTextElement.scrollTop = pipScrollPosition.value;
+      }
+    } catch (error) {
+      console.error('Error applying PiP scroll position:', error);
+    }
   };
 
   const updateSettings = (settings: {
@@ -153,6 +209,7 @@ export const useTeleprompterStore = defineStore('teleprompter', () => {
     topLinePosition,
     lastScrollPosition,
     scrollCount,
+    pipScrollPosition,
     attachments,
     currentAttachment,
     finalTranscript,
@@ -174,6 +231,8 @@ export const useTeleprompterStore = defineStore('teleprompter', () => {
     updateAttachments,
     updateCurrentAttachment,
     updateScrollState,
+    calculatePiPScrollPosition,
+    applyPiPScrollPosition,
     reset,
   };
 });
