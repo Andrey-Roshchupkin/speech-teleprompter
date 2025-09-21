@@ -55,60 +55,6 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
     maxSearchTime: 0,
   });
 
-  const maxProcessingTime = 3; // Maximum milliseconds per processing chunk (reduced for better responsiveness)
-
-  /**
-   * Yield control to the main thread to prevent blocking
-   */
-  const yieldToMainThread = (): Promise<void> => {
-    return new Promise((resolve) => {
-      if (typeof requestIdleCallback !== 'undefined') {
-        requestIdleCallback(() => resolve(), { timeout: 1 });
-      } else {
-        setTimeout(() => resolve(), 0);
-      }
-    });
-  };
-
-  /**
-   * Calculate similarity between two strings using optimized Levenshtein distance
-   * Uses early termination for better performance
-   */
-  const calculateSimilarity = (str1: string, str2: string): number => {
-    const len1 = str1.length;
-    const len2 = str2.length;
-
-    // Early termination for identical strings
-    if (str1 === str2) return 1;
-
-    // Early termination for very different lengths
-    const maxLen = Math.max(len1, len2);
-    if (maxLen === 0) return 1;
-
-    const minLen = Math.min(len1, len2);
-    if (maxLen / minLen > 3) return 0; // Very different lengths
-
-    // Use rolling array for memory efficiency
-    let prev = Array(len1 + 1)
-      .fill(0)
-      .map((_, i) => i);
-    let curr = Array(len1 + 1).fill(0);
-
-    for (let i = 1; i <= len2; i++) {
-      curr[0] = i;
-      for (let j = 1; j <= len1; j++) {
-        if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
-          curr[j] = prev[j - 1];
-        } else {
-          curr[j] = Math.min(prev[j - 1] + 1, curr[j - 1] + 1, prev[j] + 1);
-        }
-      }
-      [prev, curr] = [curr, prev];
-    }
-
-    return (maxLen - prev[len1]) / maxLen;
-  };
-
   /**
    * Simple sliding window matching algorithm
    * Based on word-by-word comparison with bonus scoring
@@ -332,21 +278,6 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
     }
 
     isProcessing.value = false;
-  };
-
-  /**
-   * Accumulate spoken words for context-aware matching
-   */
-  const accumulateSpokenWords = (newWords: string[]): void => {
-    // Add new words to accumulated context
-    accumulatedSpokenWords.value.push(...newWords);
-
-    // Trim context window to prevent memory bloat
-    if (accumulatedSpokenWords.value.length > contextWindowSize.value) {
-      const excess =
-        accumulatedSpokenWords.value.length - contextWindowSize.value;
-      accumulatedSpokenWords.value = accumulatedSpokenWords.value.slice(excess);
-    }
   };
 
   /**

@@ -463,7 +463,7 @@ const updateFirstLineCoordinates = (): void => {
   }
 
   logManager.debug(
-    `📏 First line coordinates updated: middleY=${firstLineMiddleY.value?.toFixed(2) || 'null'}, lineHeight=${lineHeight.value?.toFixed(2) || 'null'}`
+    `📏 First line coordinates updated: middleY=${firstLineMiddleY.value?.toFixed(2) ?? 'null'}, lineHeight=${lineHeight.value?.toFixed(2) ?? 'null'}`
   );
 };
 
@@ -564,27 +564,6 @@ const autoScroll = (): void => {
       `🔄 Auto-scroll: No scroll needed (currentLine=${currentLine} <= scrollTrigger=${settings.value.scrollTrigger})`
     );
   }
-};
-
-// Initialize scroll position (for PiP open/close)
-const initScroll = (): void => {
-  const teleprompterTextElement = getTeleprompterTextElement();
-  if (!teleprompterTextElement) return;
-
-  // Update coordinates first
-  updateFirstLineCoordinates();
-
-  // Then use auto-scroll logic
-  autoScroll();
-};
-
-// Scroll to current position (legacy function)
-const scrollToCurrentPosition = (): void => {
-  const teleprompterTextElement = getTeleprompterTextElement();
-  if (!teleprompterTextElement) return;
-
-  // Use auto-scroll logic instead of simple positioning
-  autoScroll();
 };
 
 // Computed
