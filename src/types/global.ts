@@ -23,7 +23,6 @@ export interface TeleprompterState {
   linesToShow: number;
   scrollTrigger: number;
   textSize: number;
-  fuzzyPrecision: number;
   primaryLanguage: string;
 
   // Scroll state
@@ -109,7 +108,6 @@ export interface TeleprompterSettings {
   linesToShow: number;
   scrollTrigger: number;
   textSize: number;
-  fuzzyPrecision: number;
   primaryLanguage: string;
   scriptText: string;
 }
@@ -162,7 +160,6 @@ export interface StoredSettings {
   linesToShow: number;
   scrollTrigger: number;
   textSize: number;
-  fuzzyPrecision: number;
   primaryLanguage: string;
   logLevel: LogLevel;
 }
@@ -306,7 +303,6 @@ export const DEFAULT_SETTINGS: TeleprompterSettings = {
   linesToShow: 5,
   scrollTrigger: 3,
   textSize: 24,
-  fuzzyPrecision: 65,
   primaryLanguage: 'en-US',
 } as const;
 

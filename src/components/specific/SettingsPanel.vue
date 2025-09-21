@@ -42,37 +42,23 @@
             @update:model-value="handleSettingChange('textSize', $event)"
           />
         </div>
-
-        <div class="setting-column">
-          <label for="fuzzyPrecision">Fuzzy Match Precision</label>
-          <BaseInput
-            id="fuzzy-precision"
-            v-model="localSettings.fuzzyPrecision"
-            type="number"
-            :min="50"
-            :max="95"
-            :step="5"
-            @update:model-value="handleSettingChange('fuzzyPrecision', $event)"
-          />
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import BaseInput from '@/components/base/BaseInput.vue'
+import { ref, watch } from 'vue';
+import BaseInput from '@/components/base/BaseInput.vue';
 
 interface TeleprompterSettings {
-  linesToShow: number
-  scrollTrigger: number
-  textSize: number
-  fuzzyPrecision: number
+  linesToShow: number;
+  scrollTrigger: number;
+  textSize: number;
 }
 
 interface Props {
-  settings: TeleprompterSettings
+  settings: TeleprompterSettings;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -80,38 +66,40 @@ const props = withDefaults(defineProps<Props>(), {
     linesToShow: 5,
     scrollTrigger: 3,
     textSize: 24,
-    fuzzyPrecision: 65,
   }),
-})
+});
 
 const emit = defineEmits<{
-  (e: 'update:settings', settings: TeleprompterSettings): void
-}>()
+  (e: 'update:settings', settings: TeleprompterSettings): void;
+}>();
 
 // Local state
-const localSettings = ref<TeleprompterSettings>({ ...props.settings })
+const localSettings = ref<TeleprompterSettings>({ ...props.settings });
 
 // Methods
-const handleSettingChange = (key: keyof TeleprompterSettings, value: any): void => {
+const handleSettingChange = (
+  key: keyof TeleprompterSettings,
+  value: any
+): void => {
   // Convert string numbers to actual numbers for numeric inputs
   if (typeof value === 'string' && !isNaN(Number(value))) {
-    value = Number(value)
+    value = Number(value);
   }
 
-  ;(localSettings.value as any)[key] = value
+  (localSettings.value as any)[key] = value;
 
   // Emit the updated settings
-  emit('update:settings', { ...localSettings.value })
-}
+  emit('update:settings', { ...localSettings.value });
+};
 
 // Watch for prop changes
 watch(
   () => props.settings,
   (newSettings) => {
-    localSettings.value = { ...newSettings }
+    localSettings.value = { ...newSettings };
   },
-  { deep: true },
-)
+  { deep: true }
+);
 </script>
 
 <style scoped>
@@ -166,5 +154,4 @@ watch(
 }
 
 /* Responsive design */
-
 </style>

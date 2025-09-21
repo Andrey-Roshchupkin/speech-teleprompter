@@ -93,18 +93,6 @@
                 max="48"
               />
             </div>
-            <div class="setting-column">
-              <label for="fuzzyPrecision">Fuzzy Match Precision</label>
-              <input
-                type="number"
-                id="fuzzyPrecision"
-                :value="settings.fuzzyPrecision"
-                @input="handleFuzzyPrecisionChange"
-                min="50"
-                max="95"
-                step="5"
-              />
-            </div>
           </div>
         </div>
 
@@ -514,7 +502,6 @@ const currentPosition = computed(
 );
 const settings = computed(() => ({
   ...teleprompterDisplay.settings.value,
-  fuzzyPrecision: fuzzyMatcher.precision.value,
 }));
 const isSpeechSupported = computed(() => speechRecognition.isSupported.value);
 
@@ -559,7 +546,6 @@ onMounted(() => {
     scrollTrigger: savedSettings.scrollTrigger,
     textSize: savedSettings.textSize,
   });
-  fuzzyMatcher.setPrecision(savedSettings.fuzzyPrecision);
   selectedLanguage.value = savedSettings.primaryLanguage;
   speechRecognition.setLanguages(savedSettings.primaryLanguage);
 
@@ -607,7 +593,6 @@ watch(
     linesToShow: teleprompterDisplay.settings.value.linesToShow,
     scrollTrigger: teleprompterDisplay.settings.value.scrollTrigger,
     textSize: teleprompterDisplay.settings.value.textSize,
-    fuzzyPrecision: fuzzyMatcher.precision.value,
     primaryLanguage: selectedLanguage.value,
   }),
   (newSettings) => {
@@ -760,12 +745,6 @@ const handleTextSizeChange = (event: Event): void => {
   nextTick(() => {
     updateFirstLineCoordinates();
   });
-};
-
-const handleFuzzyPrecisionChange = (event: Event): void => {
-  const target = event.target as HTMLInputElement;
-  const value = parseInt(target.value, 10);
-  fuzzyMatcher.setPrecision(value);
 };
 
 // Speech recognition handlers

@@ -32,7 +32,6 @@ export interface UseFuzzyMatcherOptions {
 
 export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
   // Reactive state
-  const precision = ref(65); // Default fuzzy match precision (0-100)
   const lastValidPosition = ref(0); // Track the last valid position to prevent large jumps
   const isProcessing = ref(false);
 
@@ -332,13 +331,6 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
   };
 
   /**
-   * Set the fuzzy match precision (0-100)
-   */
-  const setPrecision = (newPrecision: number): void => {
-    precision.value = Math.max(50, Math.min(95, newPrecision));
-  };
-
-  /**
    * Accumulate spoken words for context-aware matching
    */
   const accumulateSpokenWords = (newWords: string[]): void => {
@@ -417,7 +409,6 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
 
   return {
     // State
-    precision,
     lastValidPosition: readonly(lastValidPosition),
     isProcessing: readonly(isProcessing),
     performanceStats: readonly(performanceStats),
@@ -425,7 +416,6 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
     contextWindowSize: readonly(contextWindowSize),
 
     // Methods
-    setPrecision,
     processSpokenWords,
     getPerformanceStats,
     reset,
