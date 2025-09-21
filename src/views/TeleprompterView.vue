@@ -150,6 +150,7 @@
               id="primaryLanguage"
               class="language-select"
               v-model="selectedLanguage"
+              @change="handleLanguageChange"
             >
               <option
                 v-for="lang in supportedLanguages"
@@ -676,11 +677,13 @@ const handleResetSpeech = (): void => {
 //   fuzzyMatcher.setPrecision(newSettings.fuzzyPrecision)
 // }
 
-// Language change functionality temporarily disabled but code preserved
-// const handleLanguageChange = (newLanguage: string): void => {
-//   selectedLanguage.value = newLanguage
-//   speechRecognition.setLanguages(newLanguage)
-// }
+// Language change functionality
+const handleLanguageChange = (event: Event): void => {
+  const target = event.target as HTMLSelectElement;
+  const newLanguage = target.value;
+  selectedLanguage.value = newLanguage;
+  speechRecognition.setLanguages(newLanguage);
+};
 
 const handleScriptChange = (event: Event): void => {
   const target = event.target as HTMLTextAreaElement;
