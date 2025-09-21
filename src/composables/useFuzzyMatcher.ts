@@ -142,7 +142,11 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
     };
 
     // Step 2: Sliding window comparison
-    for (let i = startIndex; i <= searchEnd - spokenWords.length; i++) {
+    for (
+      let i = startIndex;
+      i <= Math.max(startIndex, searchEnd - spokenWords.length);
+      i++
+    ) {
       let score = 0;
       let matches = 0;
 

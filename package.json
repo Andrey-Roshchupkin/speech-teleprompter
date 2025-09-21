@@ -36,7 +36,6 @@
     "eslint": "^9.31.0",
     "eslint-plugin-vue": "~10.3.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
-    "gh-pages": "^6.1.1",
     "jiti": "^2.4.2",
     "jsdom": "^26.1.0",
     "prettier": "3.6.2",
