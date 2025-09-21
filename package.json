@@ -24,6 +24,7 @@
     "format:check": "prettier --check src/",
     "pre-commit": "npm run lint:check && npm run test:ci && npm run format:check && npm run type-check",
     "deploy": "npm run build:prod && gh-pages -d dist",
+    "deploy:main": "./deploy-main.sh",
     "deploy:setup": "gh-pages -d dist --add"
   },
   "dependencies": {

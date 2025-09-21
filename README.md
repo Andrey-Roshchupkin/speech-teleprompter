@@ -65,14 +65,23 @@ npm run preview
 
 ### Manual Deployment to GitHub Pages
 
+#### Option 1: Deploy to main branch (Recommended)
+
 ```bash
-# Option 1: Using npm script
+# Deploy to main branch
+npm run deploy:main
+
+# Or use script directly
+./deploy-main.sh
+```
+
+#### Option 2: Deploy to gh-pages branch
+
+```bash
+# Deploy to separate gh-pages branch
 npm run deploy
 
-# Option 2: Using deploy script
-./deploy.sh
-
-# Option 3: Step by step
+# Or step by step
 npm run build:prod
 npx gh-pages -d dist
 ```
@@ -84,8 +93,8 @@ npx gh-pages -d dist
 3. **Enable GitHub Pages** in repository settings:
    - Go to Settings → Pages
    - Source: Deploy from a branch
-   - Branch: `gh-pages` / `(root)`
-4. **Your app will be available** at: `https://your-username.github.io/speech-teleprompter/`
+   - Branch: `main` (if using main) or `gh-pages` (if using separate branch)
+4. **Your app will be available** at: `https://Andrey-Roshchupkin.github.io/speech-teleprompter/`
 
 ## 🎯 How It Works
 
