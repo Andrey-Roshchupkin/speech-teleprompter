@@ -1,11 +1,6 @@
 # Dependencies
 node_modules
 
-
-# Generated files
-index.html
-favicon.ico
-
 # OS generated files
 .DS_Store
 

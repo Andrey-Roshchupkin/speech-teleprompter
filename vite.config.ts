@@ -13,7 +13,7 @@ export default defineConfig({
   },
   base: '/speech-teleprompter/',
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
     assetsDir: 'assets',
     sourcemap: false,
     rollupOptions: {
