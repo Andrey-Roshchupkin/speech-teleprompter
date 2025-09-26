@@ -3,8 +3,22 @@
  * Configures global test environment and mocks
  */
 
-import { config } from '@vue/test-utils'
-import { afterEach, vi } from 'vitest'
+import { config } from '@vue/test-utils';
+import { afterEach, vi } from 'vitest';
+
+// Suppress Vue warnings for composable tests
+const originalWarn = console.warn;
+console.warn = (...args: any[]) => {
+  if (
+    typeof args[0] === 'string' &&
+    args[0].includes(
+      'onUnmounted is called when there is no active component instance'
+    )
+  ) {
+    return; // Suppress this specific warning
+  }
+  originalWarn.apply(console, args);
+};
 
 // ============================================================================
 // Global Test Configuration
@@ -25,12 +39,12 @@ Object.defineProperty(window, 'SpeechRecognition', {
     onresult: null,
     onerror: null,
   })),
-})
+});
 
 Object.defineProperty(window, 'webkitSpeechRecognition', {
   writable: true,
   value: window.SpeechRecognition,
-})
+});
 
 // Mock Document Picture-in-Picture API
 Object.defineProperty(window, 'documentPictureInPicture', {
@@ -52,7 +66,7 @@ Object.defineProperty(window, 'documentPictureInPicture', {
     addEventListener: vi.fn(),
     window: null,
   },
-})
+});
 
 // Mock localStorage
 const localStorageMock = {
@@ -62,16 +76,16 @@ const localStorageMock = {
   clear: vi.fn(),
   length: 0,
   key: vi.fn(),
-}
+};
 
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
-})
+});
 
 // Mock sessionStorage
 Object.defineProperty(window, 'sessionStorage', {
   value: localStorageMock,
-})
+});
 
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
@@ -86,21 +100,21 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-})
+});
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
-}))
+}));
 
 // Mock IntersectionObserver
 global.IntersectionObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
-}))
+}));
 
 // ============================================================================
 // Vue Test Utils Configuration
@@ -109,22 +123,22 @@ global.IntersectionObserver = vi.fn().mockImplementation(() => ({
 // Global components for testing
 config.global.components = {
   // Add global components here if needed
-}
+};
 
 // Global plugins for testing
 config.global.plugins = [
   // Add global plugins here if needed
-]
+];
 
 // Global mocks
 config.global.mocks = {
   $t: (key: string) => key, // i18n mock
-}
+};
 
 // Global stubs
 config.global.stubs = {
   // Add component stubs here if needed
-}
+};
 
 // ============================================================================
 // Test Utilities
@@ -134,25 +148,28 @@ config.global.stubs = {
 export const createMockSpeechResult = (
   transcript: string,
   confidence: number = 0.9,
-  isFinal: boolean = true,
+  isFinal: boolean = true
 ) => ({
   transcript,
   confidence,
   isFinal,
-})
+});
 
 // Helper function to create mock speech recognition event
-export const createMockSpeechEvent = (results: any[], resultIndex: number = 0) => ({
+export const createMockSpeechEvent = (
+  results: any[],
+  resultIndex: number = 0
+) => ({
   results,
   resultIndex,
-})
+});
 
 // Helper function to wait for next tick
-export const nextTick = () => new Promise((resolve) => setTimeout(resolve, 0))
+export const nextTick = () => new Promise((resolve) => setTimeout(resolve, 0));
 
 // Helper function to create mock DOM element
 export const createMockElement = (tagName: string = 'div') => {
-  const element = document.createElement(tagName)
+  const element = document.createElement(tagName);
   element.getBoundingClientRect = vi.fn().mockReturnValue({
     width: 100,
     height: 100,
@@ -162,9 +179,9 @@ export const createMockElement = (tagName: string = 'div') => {
     right: 100,
     x: 0,
     y: 0,
-  })
-  return element
-}
+  });
+  return element;
+};
 
 // ============================================================================
 // Cleanup
@@ -172,9 +189,9 @@ export const createMockElement = (tagName: string = 'div') => {
 
 // Clean up after each test
 afterEach(() => {
-  vi.clearAllMocks()
-  localStorageMock.clear()
-})
+  vi.clearAllMocks();
+  localStorageMock.clear();
+});
 
 // ============================================================================
 // Global Test Types
@@ -182,8 +199,8 @@ afterEach(() => {
 
 declare global {
   interface Window {
-    SpeechRecognition: any
-    webkitSpeechRecognition: any
-    documentPictureInPicture: any
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+    documentPictureInPicture: any;
   }
 }

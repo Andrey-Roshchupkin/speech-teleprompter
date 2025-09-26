@@ -34,6 +34,7 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
   // Reactive state
   const lastValidPosition = ref(0); // Track the last valid position to prevent large jumps
   const isProcessing = ref(false);
+  const isManualPositionUpdate = ref(false); // Flag to track manual position updates
 
   // Context accumulation for better matching
   const accumulatedSpokenWords = ref<string[]>([]); // Accumulate spoken words across multiple results
@@ -160,7 +161,7 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
 
     // Log performance warning if search takes too long
     if (searchTime > 20) {
-      console.warn(
+      options.logger?.error(
         `Slow search detected: ${searchTime.toFixed(2)}ms (avg: ${performanceStats.averageTime.toFixed(2)}ms)`
       );
     }
@@ -213,8 +214,12 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
         const newPosition = match.index + match.length;
 
         // Prevent backward jumps - teleprompter should only move forward
-        if (newPosition < lastValidPosition.value) {
-          console.warn(
+        // But allow backward jumps if this is a manual position update
+        if (
+          newPosition < lastValidPosition.value &&
+          !isManualPositionUpdate.value
+        ) {
+          options.logger?.error(
             `Preventing backward jump: ${newPosition} < ${lastValidPosition.value}`
           );
           return;
@@ -299,7 +304,7 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
     onMatchFound?: (result: ProcessedMatchResult) => void
   ): Promise<void> => {
     if (scriptWords.length === 0) {
-      console.warn('No script words to match against');
+      options.logger?.error('No script words to match against');
       return;
     }
 
@@ -332,6 +337,33 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
   };
 
   /**
+   * Update the current position (for manual position changes)
+   */
+  const updatePosition = (newPosition: number): void => {
+    options.logger?.debug(`🔄 Manually updating position to ${newPosition}`);
+
+    // Set flag to allow backward jumps for this update
+    isManualPositionUpdate.value = true;
+
+    // For manual updates, always set lastValidPosition to the new position
+    // This allows manual backward movement and sets the new baseline
+    lastValidPosition.value = newPosition;
+    lastProcessedPosition.value = newPosition;
+
+    // Clear accumulated context to prevent stale matches
+    accumulatedSpokenWords.value = [];
+
+    // Reset flag after a short delay to allow the next speech recognition to work normally
+    setTimeout(() => {
+      isManualPositionUpdate.value = false;
+    }, 100);
+
+    options.logger?.debug(
+      `✅ Position updated: lastValid=${lastValidPosition.value}, lastProcessed=${lastProcessedPosition.value}`
+    );
+  };
+
+  /**
    * Reset the fuzzy matcher state
    */
   const reset = (): void => {
@@ -340,6 +372,7 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
     processingQueue.length = 0;
     isProcessing.value = false;
     accumulatedSpokenWords.value = [];
+    isManualPositionUpdate.value = false;
   };
 
   return {
@@ -353,6 +386,7 @@ export const useFuzzyMatcher = (options: UseFuzzyMatcherOptions = {}) => {
     // Methods
     processSpokenWords,
     getPerformanceStats,
+    updatePosition,
     reset,
     clearAccumulatedContext,
   };

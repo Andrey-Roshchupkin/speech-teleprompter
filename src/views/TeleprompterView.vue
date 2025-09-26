@@ -117,20 +117,18 @@
               ref="teleprompterTextRef"
               class="teleprompter-text"
               :style="{ fontSize: settings.textSize + 'px' }"
+              @click="handleTextClick"
             >
-              <!-- Text before pointer (read text) -->
-              <span v-if="textBeforePointer" class="teleprompter-matched">
-                {{ textBeforePointer }}
-              </span>
-
-              <!-- Current word (pointer) -->
-              <span v-if="currentWord" class="teleprompter-highlight">
-                {{ currentWord }}
-              </span>
-
-              <!-- Text after pointer (unread text) -->
-              <span v-if="textAfterPointer">
-                {{ textAfterPointer }}
+              <!-- Individual words with click handlers -->
+              <span
+                v-for="(word, index) in teleprompterDisplay.displayedWords
+                  .value"
+                :key="index"
+                :class="getWordClass(index)"
+                :data-word-index="index"
+                class="teleprompter-word"
+              >
+                {{ word }}
               </span>
             </div>
           </div>
@@ -581,28 +579,6 @@ const settings = computed(() => ({
 }));
 const isSpeechSupported = computed(() => speechRecognition.isSupported.value);
 
-// Computed properties for text segmentation
-const textBeforePointer = computed(() => {
-  const words = teleprompterDisplay.displayedWords.value;
-  const currentPos = currentPosition.value;
-  if (currentPos <= 0) return '';
-  return words.slice(0, currentPos).join(' ') + ' ';
-});
-
-const currentWord = computed(() => {
-  const words = teleprompterDisplay.displayedWords.value;
-  const currentPos = currentPosition.value;
-  if (currentPos >= words.length) return '';
-  return words[currentPos] || '';
-});
-
-const textAfterPointer = computed(() => {
-  const words = teleprompterDisplay.displayedWords.value;
-  const currentPos = currentPosition.value;
-  if (currentPos >= words.length - 1) return '';
-  return ' ' + words.slice(currentPos + 1).join(' ');
-});
-
 // Computed height for teleprompter display based on lines to show and text size
 const teleprompterDisplayHeight = computed(() => {
   const linesToShow = settings.value.linesToShow;
@@ -870,6 +846,54 @@ const handleStatusChange = (status: any): void => {
     }
   }
 };
+
+// Word click handling
+const handleTextClick = (event: MouseEvent): void => {
+  const target = event.target as HTMLElement;
+
+  // Check if clicked element is a word span
+  if (target.classList.contains('teleprompter-word')) {
+    const wordIndex = parseInt(
+      target.getAttribute('data-word-index') ?? '0',
+      10
+    );
+
+    logManager.info(
+      `Word clicked: index ${wordIndex}, word: "${target.textContent}"`
+    );
+
+    // Update position to clicked word
+    teleprompterDisplay.updatePosition(wordIndex, []);
+
+    // Update fuzzy matcher position to prevent backward jumps
+    fuzzyMatcher.updatePosition(wordIndex);
+
+    // Update store and sync
+    store.updatePosition(wordIndex);
+    syncState();
+
+    // Trigger auto-scroll
+    nextTick(() => {
+      autoScroll();
+    });
+  }
+};
+
+// Get CSS class for word based on its position
+const getWordClass = (index: number): string => {
+  const currentPos = currentPosition.value;
+
+  const classes = ['teleprompter-word'];
+
+  if (index === currentPos) {
+    classes.push('teleprompter-highlight');
+  } else if (index < currentPos) {
+    // All words before current position should be green (matched)
+    classes.push('teleprompter-matched');
+  }
+
+  return classes.join(' ');
+};
 </script>
 
 <style scoped>
@@ -1119,17 +1143,52 @@ const handleStatusChange = (status: any): void => {
   display: none; /* WebKit browsers (Chrome, Safari, Edge) */
 }
 
+/* Teleprompter word styles */
+.teleprompter-word {
+  display: inline;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+  border-radius: 2px;
+  padding: 1px 2px;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  /* Prevent layout shifts */
+  box-sizing: border-box;
+  vertical-align: baseline;
+}
+
+.teleprompter-word:not(:last-child)::after {
+  content: ' ';
+}
+
+.teleprompter-word:hover {
+  background: rgba(255, 255, 0, 0.4);
+  /* Remove transform to prevent layout shifts */
+  box-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+}
+
 /* Teleprompter text highlighting styles */
 .teleprompter-highlight {
   background: rgba(255, 255, 0, 0.3);
-  padding: 0px 0px;
-  border-radius: 0px;
+  padding: 1px 2px; /* Same padding as .teleprompter-word */
+  border-radius: 2px; /* Same border-radius as .teleprompter-word */
   animation: teleprompter-pulse 1s infinite;
   display: inline;
+  /* Prevent layout shifts */
+  box-sizing: border-box;
+  vertical-align: baseline;
 }
 
 .teleprompter-matched {
   color: #4caf50;
+}
+
+.teleprompter-passed {
+  color: #666;
+  opacity: 0.7;
 }
 
 .teleprompter-faded {

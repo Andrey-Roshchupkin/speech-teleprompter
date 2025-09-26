@@ -1,0 +1,493 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for docs/assets/index-x5LMNHTG.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">docs/assets</a> index-x5LMNHTG.js</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/130</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/130</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import{d as le,c as I,a as D,o as F,n as we,b as K,r as Ue,t as V,e as c,f as te,w as fe,g as G,u as ye,R as qe,h as ie,i as m,j as ge,k as M,l as Ve,m as J,p as je,q as Pe,s as Ae,v as Ke,x as se,y as Ge,F as Je,z as Ye,A as pe,B as Qe,C as Xe,D as Ze,E as et}from"./vendor-CwEtSlr3.js";(function(){const e=document.createElement("link").relList;if(e&amp;&amp;e.supports&amp;&amp;e.supports("modulepreload"))return;for(const p of document.querySelectorAll('link[rel="modulepreload"]'))i(p);new MutationObserver(p=&gt;{for(const u of p)if(u.type==="childList")for(const v of u.addedNodes)v.tagName==="LINK"&amp;&amp;v.rel==="modulepreload"&amp;&amp;i(v)}).observe(document,{childList:!0,subtree:!0});function a(p){const u={};return p.integrity&amp;&amp;(u.integrity=p.integrity),p.referrerPolicy&amp;&amp;(u.referrerPolicy=p.referrerPolicy),p.crossOrigin==="use-credentials"?u.credentials="include":p.crossOrigin==="anonymous"?u.credentials="omit":u.credentials="same-origin",u}function i(p){if(p.ep)return;p.ep=!0;const u=a(p);fetch(p.href,u)}})();const tt=["href","target","rel","aria-label"],nt={key:0,class:"link-icon","aria-hidden":!0},ot=le({__name:"BaseLink",props:{href:{},target:{default:"_self"},rel:{default:""},ariaLabel:{},icon:{},variant:{default:"default"},size:{default:"md"}},emits:["click"],setup(n,{emit:e}){const a=n,i=e,p=I(()=&gt;["base-link",`base-link--${a.variant}`,`base-link--${a.size}`]),u=v=&gt;{i("click",v)};return(v,f)=&gt;(F(),D("a",{href:v.href,target:v.target,rel:v.rel,"aria-label":v.ariaLabel,class:we(p.value),onClick:u},[v.icon?(F(),D("span",nt,V(v.icon),1)):K("",!0),Ue(v.$slots,"default",{},void 0)],10,tt))}}),he=(n,e)=&gt;{const a=n.__vccOpts||n;for(const[i,p]of e)a[i]=p;return a},Se=he(ot,[["__scopeId","data-v-4926a243"]]),rt={class:"app-footer",role:"contentinfo","aria-label":"Site footer with author information and links"},at={class:"footer-content"},st={class:"footer-section","aria-labelledby":"author-links"},it={class:"author-links","aria-label":"Author social media and blog links"},lt={class:"footer-section","aria-labelledby":"source-code"},ct=le({__name:"AppFooter",setup(n){return(e,a)=&gt;(F(),D("footer",rt,[c("div",at,[a[5]||(a[5]=c("section",{class:"footer-section","aria-labelledby":"app-description"},[c("h4",{id:"app-description"},"Speech Teleprompter"),c("p",null," Free real-time speech recognition teleprompter powered by Web Speech API. Perfect for presentations, speeches, and content creation. ")],-1)),c("section",st,[a[2]||(a[2]=c("h4",{id:"author-links"},"Author",-1)),c("nav",it,[te(Se,{href:"https://www.linkedin.com/in/andrey-roshchupkin",target:"_blank",rel:"noopener noreferrer",variant:"footer",icon:"💼","aria-label":"Visit Andrey Roshchupkin's LinkedIn profile"},{default:fe(()=&gt;[...a[0]||(a[0]=[G(" LinkedIn ",-1)])]),_:1}),te(Se,{href:"https://sdet-andrew.hashnode.dev",target:"_blank",rel:"noopener noreferrer",variant:"footer",icon:"📝","aria-label":"Visit Andrey Roshchupkin's technical blog"},{default:fe(()=&gt;[...a[1]||(a[1]=[G(" Blog ",-1)])]),_:1})])]),c("section",lt,[a[4]||(a[4]=c("h4",{id:"source-code"},"Source Code",-1)),te(Se,{href:"https://github.com/Andrey-Roshchupkin/speech-teleprompter",target:"_blank",rel:"noopener noreferrer",variant:"footer",icon:"🔗","aria-label":"View Speech Teleprompter source code on GitHub"},{default:fe(()=&gt;[...a[3]||(a[3]=[G(" GitHub Repository ",-1)])]),_:1})])]),a[6]||(a[6]=c("div",{class:"footer-bottom",role:"contentinfo"},[c("p",null," © 2025 Andrey Roshchupkin. Free Speech Teleprompter with real-time speech recognition. ")],-1))]))}}),ut=he(ct,[["__scopeId","data-v-d7b7ccbe"]]),dt={class:"app-container"},pt={class:"app-main"},gt=le({__name:"App",setup(n){return(e,a)=&gt;(F(),D("div",dt,[c("main",pt,[te(ye(qe))]),te(ut)]))}}),ht=[{code:"en-US",name:"English (US)",nativeName:"English (US)"},{code:"en-GB",name:"English (UK)",nativeName:"English (UK)"},{code:"es-ES",name:"Spanish (Spain)",nativeName:"Español (España)"},{code:"es-MX",name:"Spanish (Mexico)",nativeName:"Español (México)"},{code:"fr-FR",name:"French (France)",nativeName:"Français (France)"},{code:"de-DE",name:"German (Germany)",nativeName:"Deutsch (Deutschland)"},{code:"it-IT",name:"Italian (Italy)",nativeName:"Italiano (Italia)"},{code:"pt-BR",name:"Portuguese (Brazil)",nativeName:"Português (Brasil)"},{code:"pt-PT",name:"Portuguese (Portugal)",nativeName:"Português (Portugal)"},{code:"ru-RU",name:"Russian (Russia)",nativeName:"Русский (Россия)"},{code:"ja-JP",name:"Japanese (Japan)",nativeName:"日本語 (日本)"},{code:"ko-KR",name:"Korean (South Korea)",nativeName:"한국어 (대한민국)"},{code:"zh-CN",name:"Chinese (Simplified)",nativeName:"中文 (简体)"},{code:"zh-TW",name:"Chinese (Traditional)",nativeName:"中文 (繁體)"},{code:"ar-SA",name:"Arabic (Saudi Arabia)",nativeName:"العربية (السعودية)"},{code:"hi-IN",name:"Hindi (India)",nativeName:"हिन्दी (भारत)"},{code:"nl-NL",name:"Dutch (Netherlands)",nativeName:"Nederlands (Nederland)"},{code:"sv-SE",name:"Swedish (Sweden)",nativeName:"Svenska (Sverige)"},{code:"no-NO",name:"Norwegian (Norway)",nativeName:"Norsk (Norge)"},{code:"da-DK",name:"Danish (Denmark)",nativeName:"Dansk (Danmark)"},{code:"fi-FI",name:"Finnish (Finland)",nativeName:"Suomi (Suomi)"},{code:"pl-PL",name:"Polish (Poland)",nativeName:"Polski (Polska)"},{code:"tr-TR",name:"Turkish (Turkey)",nativeName:"Türkçe (Türkiye)"},{code:"he-IL",name:"Hebrew (Israel)",nativeName:"עברית (ישראל)"},{code:"th-TH",name:"Thai (Thailand)",nativeName:"ไทย (ประเทศไทย)"},{code:"vi-VN",name:"Vietnamese (Vietnam)",nativeName:"Tiếng Việt (Việt Nam)"}],mt={class:"teleprompter-attachment-content"},vt=le({__name:"AttachmentDisplay",props:{currentAttachment:{default:null},textSize:{default:24}},setup(n){const e=n,a=I(()=&gt;({fontSize:`${e.textSize}px`})),i=I(()=&gt;({fontSize:`${Math.max(e.textSize-2,12)}px`}));return(p,u)=&gt;p.currentAttachment?(F(),D("div",{key:0,class:"teleprompter-attachment",style:ie(a.value)},[c("div",{class:"teleprompter-attachment-title",style:ie(i.value)},V(p.currentAttachment.name),5),c("div",mt,V(p.currentAttachment.content),1)],4)):K("",!0)}}),ft=he(vt,[["__scopeId","data-v-7613faf7"]]),St=(n={})=&gt;{const e=m(!1),a=m(""),i=m("en-US"),p=m(null),u=m(!1),v=[],f=m(!1);let x=null;const k=100,N=10,$={"en-US":"English (US)","en-GB":"English (UK)","es-ES":"Spanish (Spain)","es-MX":"Spanish (Mexico)","fr-FR":"French (France)","de-DE":"German (Germany)","it-IT":"Italian (Italy)","pt-BR":"Portuguese (Brazil)","pt-PT":"Portuguese (Portugal)","ru-RU":"Russian (Russia)","ja-JP":"Japanese (Japan)","ko-KR":"Korean (South Korea)","zh-CN":"Chinese (Simplified)","zh-TW":"Chinese (Traditional)","ar-SA":"Arabic (Saudi Arabia)","hi-IN":"Hindi (India)","nl-NL":"Dutch (Netherlands)","sv-SE":"Swedish (Sweden)","no-NO":"Norwegian (Norway)","da-DK":"Danish (Denmark)","fi-FI":"Finnish (Finland)","pl-PL":"Polish (Poland)","tr-TR":"Turkish (Turkey)","he-IL":"Hebrew (Israel)","th-TH":"Thai (Thailand)","vi-VN":"Vietnamese (Vietnam)"},P=()=&gt;new Promise(A=&gt;{typeof requestIdleCallback&lt;"u"?requestIdleCallback(()=&gt;A(),{timeout:1}):setTimeout(()=&gt;A(),0)}),g=async()=&gt;{if(f.value||v.length===0)return;f.value=!0;const A=performance.now();for(;v.length&gt;0;){performance.now()-A&gt;N&amp;&amp;await P();const O=v.shift();O&amp;&amp;n.onResult&amp;&amp;n.onResult(O)}f.value=!1},y=(A,O)=&gt;{x&amp;&amp;clearTimeout(x),v.push({newFinalWords:A,speechOutputHTML:O}),x=window.setTimeout(()=&gt;{g()},k)},b=A=&gt;$[A]??A,h=()=&gt;b(i.value),t=()=&gt;{if(!(window.SpeechRecognition??window.webkitSpeechRecognition)){console.error("Speech Recognition API not supported"),r();return}u.value=!0,l()},r=()=&gt;{const A=`</span></span></span>
+<span class="cstat-no" title="statement not covered" >🎤 Speech Teleprompter - Browser Support Required</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >Your current browser does not support the Web Speech API.</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >✅ Supported browsers (according to MDN):</span>
+<span class="cstat-no" title="statement not covered" >• Google Chrome (full support)</span>
+<span class="cstat-no" title="statement not covered" >• Microsoft Edge (Chromium-based, full support)</span>
+<span class="cstat-no" title="statement not covered" >• Safari (partial support, limited functionality)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >❌ Not supported:</span>
+<span class="cstat-no" title="statement not covered" >• Opera (all versions)</span>
+<span class="cstat-no" title="statement not covered" >• Firefox (all versions)</span>
+<span class="cstat-no" title="statement not covered" >• Internet Explorer (all versions)</span>
+<span class="cstat-no" title="statement not covered" >• Other browsers</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >⚠️ Note: Web Speech API is not a Baseline feature and has limited availability across browsers.</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >Please switch to Google Chrome or Microsoft Edge for the best speech recognition experience.</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >The teleprompter will work in manual mode without speech recognition.</span>
+<span class="cstat-no" title="statement not covered" >    `.trim();alert(A)},l=()=&gt;{if(!u.value)return;const A=window.SpeechRecognition??window.webkitSpeechRecognition;p.value=new A,p.value.lang=i.value,p.value.continuous=!0,p.value.interimResults=!0,p.value.onstart=d,p.value.onresult=L,p.value.onend=S,p.value.onerror=T},d=()=&gt;{e.value=!0,n.onStatusChange&amp;&amp;n.onStatusChange({status:"listening",languageInfo:h()})},L=A=&gt;{let O="",H=[];for(let j=A.resultIndex;j&lt;A.results.length;j++){const X=A.results[j][0].transcript;A.results[j].isFinal?(a.value+=X+" ",H=X.trim().split(/\s+/).filter(Z=&gt;Z.length&gt;0)):O+=X}const Y=a.value+'&lt;span class="teleprompter-interim"&gt;'+O+"&lt;/span&gt;";H.length&gt;0?y(H,Y):n.onResult&amp;&amp;n.onResult({newFinalWords:[],speechOutputHTML:Y})},S=()=&gt;{e.value=!1,n.onStatusChange&amp;&amp;n.onStatusChange({status:"stopped",languageInfo:h()})},T=A=&gt;{console.error("Speech recognition error:",A.error),e.value=!1,n.onStatusChange&amp;&amp;n.onStatusChange({status:"error",languageInfo:h()})},E=A=&gt;{i.value=A,l()},z=()=&gt;{!e.value&amp;&amp;p.value&amp;&amp;(p.value.start(),a.value="")},R=()=&gt;{e.value&amp;&amp;p.value&amp;&amp;p.value.stop()},U=()=&gt;{a.value="",x&amp;&amp;(clearTimeout(x),x=null),v.length=0,f.value=!1};return t(),ge(()=&gt;{x&amp;&amp;clearTimeout(x),p.value&amp;&amp;p.value.stop()}),{isRecognizing:M(e),finalTranscript:M(a),primaryLanguage:i,isSupported:M(u),setLanguages:E,start:z,stop:R,reset:U,getLanguageInfo:h,getLanguageName:b}},wt=(n={})=&gt;{const e=m(0),a=m(!1),i=m([]),p=m(30),u=m(0),v=[],f=Ve({totalSearches:0,totalTime:0,averageTime:0,maxSearchTime:0}),x=async(h,t,r=0)=&gt;{const l=performance.now(),d=Math.min(10,Math.max(5,Math.floor(h.length*.5))),L=h.length+d,S=Math.min(r+L,t.length);n.logger?.debug(`🔍 Search window: ${L} words (${h.length} + ${d} buffer)`),n.logger?.debug(`📍 Search range: ${r} to ${S}`);let T={index:-1,score:0,length:h.length,rawSimilarity:0,distance:0};for(let R=r;R&lt;=Math.max(r,S-h.length);R++){let U=0,A=0;for(let H=0;H&lt;h.length;H++){const Y=h[H].toLowerCase(),j=t[R+H]?.toLowerCase();Y===j&amp;&amp;(A++,U+=1,H===h.length-1?U+=3:H===h.length-2&amp;&amp;(U+=2))}const O=A/h.length;U&gt;T.score&amp;&amp;(T={index:R,score:U,length:h.length,rawSimilarity:O,distance:Math.abs(R-r)})}const z=performance.now()-l;return k(z),n.logger?.debug(`🎯 Best match: index=${T.index}, score=${T.score}, similarity=${T.rawSimilarity.toFixed(3)}`),T},k=h=&gt;{f.totalSearches++,f.totalTime+=h,f.averageTime=f.totalTime/f.totalSearches,f.maxSearchTime=Math.max(f.maxSearchTime,h),h&gt;20&amp;&amp;console.warn(`Slow search detected: ${h.toFixed(2)}ms (avg: ${f.averageTime.toFixed(2)}ms)`)},N=async(h,t,r,l)=&gt;{try{n.logger?.debug(`🔍 Processing match: "${h.join(" ")}" (${h.length} words)`),n.logger?.debug(`📍 Current position: ${r}, Script length: ${t.length}`);const d=await x(h,t,r);n.logger?.debug(`🎯 Match result: index=${d.index}, score=${d.score.toFixed(3)}, length=${d.length}, similarity=${d.rawSimilarity.toFixed(3)}`);const L=d.length+3,S=L*.3;n.logger?.debug(`📊 Threshold check: score=${d.score}, maxPossible=${L}, threshold=${S.toFixed(1)}`);const T=d.index!==-1&amp;&amp;d.score&gt;=S;if(n.logger?.debug(`✅ Match validation: ${T?"PASSED":"FAILED"} (score=${d.score} &gt;= ${S.toFixed(1)})`),T){const E=d.index+d.length;if(E&lt;e.value){console.warn(`Preventing backward jump: ${E} &lt; ${e.value}`);return}e.value=Math.max(e.value,E),u.value=E,i.value.length&gt;10&amp;&amp;(i.value=i.value.slice(-5));const z=[];for(let R=d.index;R&lt;d.index+d.length;R++)z.push(R);l&amp;&amp;l({newPosition:E,matchedIndices:z,match:d})}}catch(d){console.error("Error processing match:",d)}},$=async()=&gt;{if(!(a.value||v.length===0)){for(a.value=!0;v.length&gt;0;){const{spokenWords:h,scriptWords:t,currentPosition:r,onMatchFound:l}=v.shift();await N(h,t,r,l)}a.value=!1}},P=()=&gt;{i.value=[],u.value=e.value},g=async(h,t,r,l)=&gt;{if(t.length===0){console.warn("No script words to match against");return}const d=h;n.logger?.debug(`🆕 Processing ${d.length} words: "${d.join(" ")}"`),v.push({spokenWords:d,scriptWords:t,currentPosition:r,onMatchFound:l??n.onMatchFound??(()=&gt;{})}),!a.value&amp;&amp;await $()},y=()=&gt;({...f}),b=()=&gt;{e.value=0,u.value=0,v.length=0,a.value=!1,i.value=[]};return{lastValidPosition:M(e),isProcessing:M(a),performanceStats:M(f),accumulatedSpokenWords:M(i),contextWindowSize:M(p),processSpokenWords:g,getPerformanceStats:y,reset:b,clearAccumulatedContext:P}},yt=()=&gt;{const n=m([]),e=m(null),a=m([]),i=P=&gt;{n.value=[];const g=/\[ATTACHMENT:([^\]]+)\]([\s\S]*?)\[\/ATTACHMENT\]/g;let y;for(;(y=g.exec(P))!==null;){const b=y[2].trim(),t=P.substring(0,y.index).split(/\s+/).filter(L=&gt;L.length&gt;0),r=y[0].split(/\s+/).filter(L=&gt;L.length&gt;0),l=t.length,d=l+r.length;n.value.push({name:y[1],content:b,startWordIndex:l,endWordIndex:d})}},p=P=&gt;{a.value=P},u=P=&gt;{let g=0;if(!a.value||!Array.isArray(a.value))return P;for(let y=0;y&lt;a.value.length&amp;&amp;y&lt;=P;y++){let b=!1;for(const h of n.value)if(y&gt;=h.startWordIndex&amp;&amp;y&lt;h.endWordIndex){b=!0;break}if(b){if(y===P)return-1}else{if(y===P)return g;g++}}return g},v=(P,g)=&gt;{for(let y=0;y&lt;g.length;y++){const b=g[y];if(b&amp;&amp;b.startsWith("[")&amp;&amp;b.endsWith("]")&amp;&amp;b.slice(1,-1)===P.name)return y}return-1},f=(P,g)=&gt;{let y=null;if(P&lt;g.length){const b=g[P];if(b&amp;&amp;b.startsWith("[")&amp;&amp;b.endsWith("]")){const h=b.slice(1,-1);for(const t of n.value)if(t.name===h){y=t;break}}}if(!y&amp;&amp;n.value.length&gt;0){for(const b of n.value)if(v(b,g)&gt;=P){y=b;break}}e.value=y},x=P=&gt;{for(const g of n.value)if(P&gt;=g.startWordIndex&amp;&amp;P&lt;g.endWordIndex)return g.endWordIndex;return P},k=()=&gt;{e.value=null},N=()=&gt;{n.value.length&gt;0&amp;&amp;(e.value=n.value[0])},$=P=&gt;P.replace(/\[ATTACHMENT:([^\]]+)\][\s\S]*?\[\/ATTACHMENT\]/g,(g,y)=&gt;`[${y}]`);return{attachments:M(n),currentAttachment:M(e),originalScriptWords:M(a),parseAttachments:i,setOriginalScriptWords:p,convertOriginalToDisplayPosition:u,findAttachmentDisplayPosition:v,updateAttachmentDisplay:f,findNextValidPosition:x,reset:k,showFirstAttachment:N,getDisplayText:$}},Pt=(n={})=&gt;{const e=yt(),a=m(""),i=m(0),p=m([]),u=m({linesToShow:5,scrollTrigger:3,textSize:24}),v=I(()=&gt;e.getDisplayText(a.value).split(/\s+/).filter(T=&gt;T.length&gt;0)),f=I(()=&gt;v.value.length),x=I(()=&gt;f.value===0?0:Math.round(i.value/f.value*100)),k=I(()=&gt;v.value),N=I(()=&gt;{const S=k.value,T=new Array(S.length).fill("normal");for(let E=0;E&lt;S.length;E++)E===i.value?T[E]="current":p.value.includes(E)?T[E]="matched":E&lt;i.value&amp;&amp;(T[E]="passed");return T}),$=S=&gt;{a.value=S,e.parseAttachments(S);const T=S.split(/\s+/).filter(E=&gt;E.length&gt;0);e.setOriginalScriptWords(T),i.value=0,p.value=[],J(()=&gt;{e.showFirstAttachment()}),n.onPositionChange&amp;&amp;n.onPositionChange(i.value),n.onProgressChange&amp;&amp;n.onProgressChange(x.value)},P=S=&gt;{u.value={...u.value,...S}},g=(S,T)=&gt;{i.value=S,p.value=T,e.updateAttachmentDisplay(i.value,v.value),n.onPositionChange&amp;&amp;n.onPositionChange(i.value),n.onProgressChange&amp;&amp;n.onProgressChange(x.value)},y=()=&gt;{i.value=0,p.value=[],e.reset(),J(()=&gt;{e.showFirstAttachment()}),n.onPositionChange&amp;&amp;n.onPositionChange(i.value),n.onProgressChange&amp;&amp;n.onProgressChange(x.value)},b=()=&gt;i.value,h=()=&gt;f.value,t=()=&gt;x.value,r=()=&gt;v.value,l=S=&gt;{i.value=Math.max(0,Math.min(S,f.value)),n.onPositionChange&amp;&amp;n.onPositionChange(i.value),n.onProgressChange&amp;&amp;n.onProgressChange(x.value)},d=()=&gt;{const S=Math.max(0,i.value-u.value.scrollTrigger);l(S)},L=()=&gt;{const S=Math.min(f.value,i.value+u.value.scrollTrigger);l(S)};return{scriptText:a,currentPosition:M(i),matchedWords:M(p),settings:u,attachmentManager:e,scriptWords:M(v),totalWords:M(f),progress:M(x),displayedWords:M(k),wordStates:M(N),updateScript:$,updateSettings:P,updatePosition:g,reset:y,getCurrentPosition:b,getTotalWords:h,getProgress:t,getOriginalScriptWords:r,scrollToPosition:l,scrollUp:d,scrollDown:L}},bt=(n={})=&gt;{const e=n.storageKey??"speechTeleprompterSettings",a=n.autoSaveDelay??1e3;let i=null;const p=m(!1),u=m(null),v=()=&gt;({scriptText:"Welcome to our presentation. Today we will be discussing the future of technology and how it impacts our daily lives. Let me start by sharing some interesting statistics about digital transformation in various industries. [ATTACHMENT:SLIDE_1]The global digital transformation market is expected to reach 3.3 trillion dollars by 2025. This represents a significant shift in how businesses operate and compete in the modern economy.[/ATTACHMENT] Now let me show you some key trends that are shaping this transformation. These trends are not just theoretical concepts but real changes happening right now. [ATTACHMENT:SLIDE_2]Artificial intelligence and machine learning are driving unprecedented changes across sectors. From healthcare to finance, from manufacturing to retail, no industry remains untouched by this technological revolution.[/ATTACHMENT] The impact of these technologies goes beyond just automation. They are creating new business models and opportunities that we never imagined before. [ATTACHMENT:SLIDE_3]Cloud computing has become the backbone of modern business operations. Companies are moving away from traditional on-premises infrastructure to embrace scalable, flexible cloud solutions.[/ATTACHMENT] Thank you for your attention, and I look forward to your questions.",linesToShow:5,scrollTrigger:3,textSize:24,primaryLanguage:"en-US"}),f=()=&gt;{try{const t=localStorage.getItem(e);if(t){const r=JSON.parse(t);return r.lastSaved&amp;&amp;(u.value=new Date(r.lastSaved)),r}}catch(t){console.error("Error loading settings from local storage:",t)}return v()},x=()=&gt;{let t=document.getElementById("saveIndicator");t||(t=document.createElement("div"),t.id="saveIndicator",t.style.cssText=`</span>
+<span class="cstat-no" title="statement not covered" >        position: fixed;</span>
+<span class="cstat-no" title="statement not covered" >        top: 20px;</span>
+<span class="cstat-no" title="statement not covered" >        right: 20px;</span>
+<span class="cstat-no" title="statement not covered" >        background: #28a745;</span>
+<span class="cstat-no" title="statement not covered" >        color: white;</span>
+<span class="cstat-no" title="statement not covered" >        padding: 8px 16px;</span>
+<span class="cstat-no" title="statement not covered" >        border-radius: 20px;</span>
+<span class="cstat-no" title="statement not covered" >        font-size: 14px;</span>
+<span class="cstat-no" title="statement not covered" >        font-weight: 600;</span>
+<span class="cstat-no" title="statement not covered" >        z-index: 10000;</span>
+<span class="cstat-no" title="statement not covered" >        opacity: 0;</span>
+<span class="cstat-no" title="statement not covered" >        transition: opacity 0.3s ease;</span>
+<span class="cstat-no" title="statement not covered" >        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);</span>
+<span class="cstat-no" title="statement not covered" >      `,document.body.appendChild(t)),t&amp;&amp;(t.textContent="💾 Auto-saved",t.style.opacity="1"),setTimeout(()=&gt;{t&amp;&amp;(t.style.opacity="0")},2e3)},k=t=&gt;{try{p.value=!0;const r={scriptText:t.scriptText||"",linesToShow:Math.max(parseInt(String(t.linesToShow))||5,2),scrollTrigger:Math.min(parseInt(String(t.scrollTrigger))||3,Math.max(1,(parseInt(String(t.linesToShow))||5)-1)),textSize:parseInt(String(t.textSize))||24,primaryLanguage:t.primaryLanguage||"en-US",lastSaved:new Date().toISOString()};localStorage.setItem(e,JSON.stringify(r)),u.value=new Date,x(),n.onSave&amp;&amp;n.onSave(r)}catch(r){console.error("Error saving settings to local storage:",r)}finally{p.value=!1}},N=t=&gt;{i&amp;&amp;clearTimeout(i),i=window.setTimeout(()=&gt;{k(t)},a)},$=t=&gt;{i&amp;&amp;clearTimeout(i),k(t)},P=()=&gt;{try{localStorage.removeItem(e),u.value=null}catch(t){console.error("Error clearing settings:",t)}},g=()=&gt;{try{return localStorage.getItem(e)!==null}catch(t){return console.error("Error checking for saved settings:",t),!1}},y=()=&gt;{try{const t=localStorage.getItem(e);if(t){const r=JSON.parse(t);return r.lastSaved?new Date(r.lastSaved):null}}catch(t){console.error("Error getting last saved time:",t)}return null},b=()=&gt;{try{const t=f();return JSON.stringify(t,null,2)}catch(t){return console.error("Error exporting settings:",t),null}},h=t=&gt;{try{const r=JSON.parse(t);return $(r),!0}catch(r){return console.error("Error importing settings:",r),!1}};return ge(()=&gt;{i&amp;&amp;clearTimeout(i)}),{isSaving:M(p),lastSaved:M(u),getDefaultSettings:v,getSavedSettings:f,saveSettings:N,saveSettingsImmediate:$,clearSettings:P,hasSettings:g,getLastSavedTime:y,exportSettings:b,importSettings:h}},me=(n={})=&gt;{const e=n.maxEntries??1e3,a=m("info"),i=m([]),p={off:0,error:1,info:2,debug:3},u=t=&gt;{t in p?(a.value=t,console.log(`🐛 Log level set to: ${t.toUpperCase()}`)):(console.warn(`⚠️ Invalid log level: ${t}. Using 'info' instead.`),a.value="info")},v=()=&gt;a.value,f=t=&gt;p[t]&lt;=p[a.value],x=t=&gt;{i.value.push(t),i.value.length&gt;e&amp;&amp;(i.value=i.value.slice(-e)),n.onLog&amp;&amp;n.onLog(t)},k=(...t)=&gt;{f("error")&amp;&amp;(console.error("❌",...t),x({timestamp:new Date,level:"error",message:t.join(" "),args:t}))},N=(...t)=&gt;{f("info")&amp;&amp;(console.log("ℹ️",...t),x({timestamp:new Date,level:"info",message:t.join(" "),args:t}))},$=(...t)=&gt;{f("debug")&amp;&amp;(console.log("🐛",...t),x({timestamp:new Date,level:"debug",message:t.join(" "),args:t}))},P=t=&gt;({error:(...r)=&gt;{f("error")&amp;&amp;(console.error("❌",`[${t}]`,...r),x({timestamp:new Date,level:"error",namespace:t,message:r.join(" "),args:r}))},info:(...r)=&gt;{f("info")&amp;&amp;(console.log("ℹ️",`[${t}]`,...r),x({timestamp:new Date,level:"info",namespace:t,message:r.join(" "),args:r}))},debug:(...r)=&gt;{f("debug")&amp;&amp;(console.log("🐛",`[${t}]`,...r),x({timestamp:new Date,level:"debug",namespace:t,message:r.join(" "),args:r}))},log:(...r)=&gt;{f("info")&amp;&amp;(console.log("ℹ️",`[${t}]`,...r),x({timestamp:new Date,level:"info",namespace:t,message:r.join(" "),args:r}))}}),g=(t,r,...l)=&gt;{f(t)&amp;&amp;(console.log(r,...l),x({timestamp:new Date,level:t,message:l.join(" "),args:l}))},y=()=&gt;{i.value=[]},b=t=&gt;t?i.value.filter(r=&gt;r.level===t):[...i.value],h=()=&gt;JSON.stringify(i.value,null,2);return{logLevel:a,logEntries:M(i),setLogLevel:u,getLogLevel:v,shouldLog:f,error:k,info:N,debug:$,createLogger:P,logWithLevel:g,clearLogs:y,getLogEntries:b,exportLogs:h}};me();const be=je("teleprompter",()=&gt;{const n=m(""),e=m(0),a=m([]),i=m([]),p=m([]),u=m(!1),v=m(!1),f=m(null),x=m(5),k=m(3),N=m(24),$=m("en-US"),P=m(0),g=m(0),y=m(0),b=m(0),h=m([]),t=m(null),r=m(""),l=m(""),d=m("stopped"),L=I(()=&gt;i.value.length===0?0:Math.round(e.value/i.value.length*100)),S=I(()=&gt;e.value&gt;=i.value.length-1),T=I(()=&gt;e.value&lt;=0);return{scriptText:n,currentPosition:e,matchedWords:a,scriptWords:i,displayWords:p,isListening:u,isInPiP:v,pipWindow:f,linesToShow:x,scrollTrigger:k,textSize:N,primaryLanguage:$,topLinePosition:P,lastScrollPosition:g,scrollCount:y,pipScrollPosition:b,attachments:h,currentAttachment:t,finalTranscript:r,interimTranscript:l,recognitionStatus:d,progress:L,isAtEnd:S,isAtStart:T,updateScript:C=&gt;{n.value=C,i.value=C.split(/\s+/).filter(_=&gt;_.length&gt;0),p.value=[...i.value],e.value=0,a.value=[]},updatePosition:C=&gt;{const _=e.value;e.value=Math.max(0,Math.min(C,i.value.length-1)),(e.value&gt;_||e.value&lt;_)&amp;&amp;(a.value=i.value.slice(0,e.value))},updateMatchedWords:C=&gt;{a.value=C},updateSpeechState:(C,_)=&gt;{u.value=C,d.value=_},updatePiPState:(C,_=null)=&gt;{v.value=C,f.value=_},updateSettings:C=&gt;{C.linesToShow!==void 0&amp;&amp;(x.value=C.linesToShow),C.scrollTrigger!==void 0&amp;&amp;(k.value=C.scrollTrigger),C.textSize!==void 0&amp;&amp;(N.value=C.textSize),C.primaryLanguage!==void 0&amp;&amp;($.value=C.primaryLanguage)},updateAttachments:C=&gt;{h.value=C},updateCurrentAttachment:C=&gt;{t.value=C},updateScrollState:(C,_,Q)=&gt;{P.value=C,g.value=_,y.value=Q},calculatePiPScrollPosition:C=&gt;{if(!C||e.value&lt;0)return 0;try{const _=C.querySelector(".teleprompter-highlight");if(!_)return 0;const Q=_.getBoundingClientRect(),ne=C.getBoundingClientRect(),ve=Q.top-ne.top+Q.height/2,ce=ne.height,ue=ve-ce/2;return b.value=Math.max(0,ue),b.value}catch(_){return console.error("Error calculating PiP scroll position:",_),0}},applyPiPScrollPosition:C=&gt;{if(!(!C||C.closed))try{const _=C.document.querySelector(".teleprompter-text");_&amp;&amp;b.value&gt;0&amp;&amp;(_.scrollTop=b.value)}catch(_){console.error("Error applying PiP scroll position:",_)}},reset:()=&gt;{e.value=0,a.value=[],P.value=0,g.value=0,y.value=0,t.value=null,r.value="",l.value="",d.value="stopped",u.value=!1}}}),Ee=()=&gt;{const n=me(),e=be(),a=m(null),i=m(!1),p=m(0),u=100,v=()=&gt;{if(!window.BroadcastChannel){n.error("BroadcastChannel not supported in this browser");return}try{a.value=new BroadcastChannel("teleprompter-sync"),i.value=!0,a.value.addEventListener("message",f),n.info("📡 BroadcastChannel initialized for teleprompter sync")}catch(r){n.error(`Failed to initialize BroadcastChannel: ${r}`)}},f=r=&gt;{const l=r.data,d=Date.now();if(!(d-p.value&lt;u))switch(p.value=d,n.debug(`📡 Received broadcast: ${l.type} from ${l.source}`),l.type){case"state_update":x(l.data);break;case"button_click":k(l.data);break;case"settings_change":N(l.data);break;case"pip_toggle":$(l.data);break}},x=r=&gt;{const{currentPosition:l,matchedWords:d,isListening:L,recognitionStatus:S}=r;l!==void 0&amp;&amp;e.updatePosition(l),d!==void 0&amp;&amp;e.updateMatchedWords(d),(L!==void 0||S!==void 0)&amp;&amp;e.updateSpeechState(L,S),n.debug("📡 State synchronized from broadcast")},k=r=&gt;{const{buttonId:l,action:d}=r;n.debug(`📡 Button click synchronized: ${l} - ${d}`),window.dispatchEvent(new CustomEvent("teleprompter-button-sync",{detail:{buttonId:l,action:d}}))},N=r=&gt;{e.updateSettings(r),n.debug("📡 Settings synchronized from broadcast")},$=r=&gt;{const{isInPiP:l,hasWindow:d}=r;e.updatePiPState(l,d?window:null),n.debug(`📡 PiP state synchronized: ${l}`)},P=(r,l)=&gt;{if(!a.value||!i.value){n.error("Cannot broadcast: channel not connected");return}const d={type:r,source:e.isInPiP?"pip":"main",data:l,timestamp:Date.now()};try{a.value.postMessage(d),n.debug(`📡 Broadcasted: ${r}`)}catch(L){n.error(`Failed to broadcast message: ${L}`)}},g=()=&gt;{const r={currentPosition:e.currentPosition,matchedWords:[...e.matchedWords],isListening:e.isListening,recognitionStatus:e.recognitionStatus,scriptText:e.scriptText,progress:e.progress,scriptWords:[...e.scriptWords],currentAttachment:e.currentAttachment?{name:e.currentAttachment.name,content:e.currentAttachment.content,startWordIndex:e.currentAttachment.startWordIndex,endWordIndex:e.currentAttachment.endWordIndex}:null};P("state_update",r)},y=(r,l)=&gt;{P("button_click",{buttonId:r,action:l})},b=r=&gt;{P("settings_change",r)},h=(r,l=null)=&gt;{P("pip_toggle",{isInPiP:r,hasWindow:!!l})},t=()=&gt;{a.value&amp;&amp;(a.value.removeEventListener("message",f),a.value.close(),a.value=null,i.value=!1,n.info("📡 BroadcastChannel closed"))};return Pe(()=&gt;{v()}),ge(()=&gt;{t()}),{isConnected:i,syncState:g,syncButtonClick:y,syncSettings:b,syncPiPState:h,broadcastMessage:P,closeChannel:t}},Tt=()=&gt;{const n=me(),e=be(),{syncPiPState:a,syncState:i,syncButtonClick:p}=Ee(),u=m(null),v=m(!1),f=I(()=&gt;e.isInPiP),x=()=&gt;{v.value=!!window.documentPictureInPicture?.requestWindow,v.value?n.info("📺 Document Picture-in-Picture is supported"):n.error("Document Picture-in-Picture not supported in this browser")},k=()=&gt;{const l=document.querySelector(".teleprompter-pip-wrapper");if(!l)throw new Error("Teleprompter wrapper not found");const d=l.querySelector(".teleprompter-section");if(!d)throw new Error("Teleprompter section not found");l.setAttribute("data-original-wrapper","true");const L=d.querySelector("#pip-button");L&amp;&amp;L.remove();const S=d.querySelector(".teleprompter-header");return S&amp;&amp;S.remove(),d},N=()=&gt;{if(!u.value||u.value.closed)return;const l=u.value.document.querySelector(".teleprompter-section");if(!l)return;const d=document.querySelector('[data-original-wrapper="true"]');if(!d)return;d.appendChild(l);const L=document.createElement("div");L.className="teleprompter-header";const S=document.createElement("h3");S.textContent="📺 Teleprompter Display",L.appendChild(S);const T=document.createElement("button");T.id="pip-button",T.className="pip-button",T.innerHTML="📺 PiP",T.setAttribute("aria-label","Toggle Picture-in-Picture mode"),T.addEventListener("click",()=&gt;b()),L.appendChild(T),l.insertBefore(L,l.firstChild),d.removeAttribute("data-original-wrapper")},$=()=&gt;`</span>
+<span class="cstat-no" title="statement not covered" >      &lt;!DOCTYPE html&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;html lang="en"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;head&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;meta charset="UTF-8"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;title&gt;Teleprompter PiP&lt;/title&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;style&gt;</span>
+<span class="cstat-no" title="statement not covered" >          * {</span>
+<span class="cstat-no" title="statement not covered" >            margin: 0;</span>
+<span class="cstat-no" title="statement not covered" >            padding: 15;</span>
+<span class="cstat-no" title="statement not covered" >            box-sizing: border-box;</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
+<span class="cstat-no" title="statement not covered" >          </span>
+<span class="cstat-no" title="statement not covered" >          body {</span>
+<span class="cstat-no" title="statement not covered" >            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;</span>
+<span class="cstat-no" title="statement not covered" >            background: #1a1a1a;</span>
+<span class="cstat-no" title="statement not covered" >            color: #ffffff;</span>
+<span class="cstat-no" title="statement not covered" >            overflow: hidden;</span>
+<span class="cstat-no" title="statement not covered" >            height: 100vh;</span>
+<span class="cstat-no" title="statement not covered" >            display: flex;</span>
+<span class="cstat-no" title="statement not covered" >            flex-direction: column;</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
+<span class="cstat-no" title="statement not covered" >          </span>
+<span class="cstat-no" title="statement not covered" >          .pip-content {</span>
+<span class="cstat-no" title="statement not covered" >            flex: 1;</span>
+<span class="cstat-no" title="statement not covered" >            padding: 15;</span>
+<span class="cstat-no" title="statement not covered" >            overflow-y: auto;</span>
+<span class="cstat-no" title="statement not covered" >            scrollbar-width: none;</span>
+<span class="cstat-no" title="statement not covered" >            -ms-overflow-style: none;</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
+<span class="cstat-no" title="statement not covered" >          </span>
+<span class="cstat-no" title="statement not covered" >          .pip-content::-webkit-scrollbar {</span>
+<span class="cstat-no" title="statement not covered" >            display: none;</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
+<span class="cstat-no" title="statement not covered" >          </span>
+<span class="cstat-no" title="statement not covered" >          /* Import styles from main document */</span>
+<span class="cstat-no" title="statement not covered" >          .pip-clone {</span>
+<span class="cstat-no" title="statement not covered" >            /* Inherit styles from main document */</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/style&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/head&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;body&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div class="pip-content" id="pip-content"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;!-- Cloned teleprompter section will be inserted here --&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        </span>
+<span class="cstat-no" title="statement not covered" >        &lt;script&gt;</span>
+<span class="cstat-no" title="statement not covered" >          // PiP window script</span>
+<span class="cstat-no" title="statement not covered" >          let broadcastChannel = null;</span>
+<span class="cstat-no" title="statement not covered" >          </span>
+<span class="cstat-no" title="statement not covered" >          // Initialize broadcast channel</span>
+<span class="cstat-no" title="statement not covered" >          if (window.BroadcastChannel) {</span>
+<span class="cstat-no" title="statement not covered" >            broadcastChannel = new BroadcastChannel('teleprompter-sync');</span>
+<span class="cstat-no" title="statement not covered" >            </span>
+<span class="cstat-no" title="statement not covered" >            broadcastChannel.addEventListener('message', (event) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >              const message = event.data;</span>
+<span class="cstat-no" title="statement not covered" >              </span>
+<span class="cstat-no" title="statement not covered" >              switch (message.type) {</span>
+<span class="cstat-no" title="statement not covered" >                case 'state_update':</span>
+<span class="cstat-no" title="statement not covered" >                  updateDisplay(message.data);</span>
+<span class="cstat-no" title="statement not covered" >                  break;</span>
+<span class="cstat-no" title="statement not covered" >                case 'button_click':</span>
+<span class="cstat-no" title="statement not covered" >                  handleButtonSync(message.data);</span>
+<span class="cstat-no" title="statement not covered" >                  break;</span>
+<span class="cstat-no" title="statement not covered" >                case 'pip_toggle':</span>
+<span class="cstat-no" title="statement not covered" >                  updatePiPState(message.data);</span>
+<span class="cstat-no" title="statement not covered" >                  break;</span>
+<span class="cstat-no" title="statement not covered" >              }</span>
+<span class="cstat-no" title="statement not covered" >            });</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
+<span class="cstat-no" title="statement not covered" >          </span>
+<span class="cstat-no" title="statement not covered" >          function updateDisplay(data) {</span>
+<span class="cstat-no" title="statement not covered" >            // The cloned elements will be updated automatically through DOM synchronization</span>
+<span class="cstat-no" title="statement not covered" >            // This function can be used for additional updates if needed</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
+<span class="cstat-no" title="statement not covered" >          </span>
+<span class="cstat-no" title="statement not covered" >          function handleButtonSync(data) {</span>
+<span class="cstat-no" title="statement not covered" >            // Handle button synchronization if needed</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
+<span class="cstat-no" title="statement not covered" >          </span>
+<span class="cstat-no" title="statement not covered" >          function updatePiPState(data) {</span>
+<span class="cstat-no" title="statement not covered" >            // Handle PiP state changes if needed</span>
+<span class="cstat-no" title="statement not covered" >          }</span>
+<span class="cstat-no" title="statement not covered" >          </span>
+<span class="cstat-no" title="statement not covered" >          // Handle window close</span>
+<span class="cstat-no" title="statement not covered" >          window.addEventListener('beforeunload', () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            if (broadcastChannel) {</span>
+<span class="cstat-no" title="statement not covered" >              broadcastChannel.postMessage({</span>
+<span class="cstat-no" title="statement not covered" >                type: 'pip_toggle',</span>
+<span class="cstat-no" title="statement not covered" >                source: 'pip',</span>
+<span class="cstat-no" title="statement not covered" >                data: { isInPiP: false, pipWindow: null },</span>
+<span class="cstat-no" title="statement not covered" >                timestamp: Date.now()</span>
+<span class="cstat-no" title="statement not covered" >              });</span>
+<span class="cstat-no" title="statement not covered" >            }</span>
+<span class="cstat-no" title="statement not covered" >          });</span>
+<span class="cstat-no" title="statement not covered" >        &lt;\/script&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/body&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/html&gt;</span>
+<span class="cstat-no" title="statement not covered" >    `,P=async()=&gt;{if(!v.value){n.error("Document Picture-in-Picture not supported");return}try{n.info("📺 Opening Document Picture-in-Picture window...");const l=k(),d=$(),L=new Blob([d],{type:"text/html"}),S=URL.createObjectURL(L);if(u.value=await window.documentPictureInPicture.requestWindow({width:400,height:300}),u.value){u.value.document.write(d),u.value.document.close();const T=u.value.document.getElementById("pip-content");T&amp;&amp;T.appendChild(l),document.querySelectorAll('style, link[rel="stylesheet"]').forEach(z=&gt;{if(z.tagName==="STYLE"){const R=z.cloneNode(!0);u.value.document.head.appendChild(R)}else if(z.tagName==="LINK"){const R=z.cloneNode(!0);u.value.document.head.appendChild(R)}})}URL.revokeObjectURL(S),e.updatePiPState(!0,u.value),a(!0,u.value),await J(),i(),h(),u.value&amp;&amp;(u.value.addEventListener("pagehide",y),u.value.addEventListener("resize",()=&gt;{setTimeout(()=&gt;{h()},100)})),n.info("📺 Document Picture-in-Picture window opened successfully")}catch(l){throw n.error(`Failed to open PiP window: ${l}`),l}},g=()=&gt;{u.value&amp;&amp;!u.value.closed&amp;&amp;(n.info("📺 Closing Document Picture-in-Picture window..."),N(),u.value&amp;&amp;(u.value.removeEventListener("pagehide",y),u.value.close(),u.value=null),e.updatePiPState(!1,null),a(!1,null),n.info("📺 Document Picture-in-Picture window closed"))},y=()=&gt;{n.info("📺 PiP window closed by user"),N(),e.updatePiPState(!1,null),a(!1,null),u.value=null},b=async()=&gt;{f.value?g():await P()},h=()=&gt;{if(!(!u.value||u.value.closed))try{const l=u.value.document.querySelector(".teleprompter-text");if(!l)return;const d=e.calculatePiPScrollPosition(l);e.applyPiPScrollPosition(u.value),n.debug(`📺 PiP scroll position synchronized: ${d.toFixed(2)}px`)}catch(l){n.error(`Failed to sync scroll position: ${l}`)}},t=()=&gt;{if(!(!u.value||u.value.closed))try{n.debug("📺 PiP content synchronized (element moved, no sync needed)")}catch(l){n.error(`Failed to sync PiP content: ${l}`)}},r=()=&gt;{if(f.value){const l=e.isListening?"stop":"start";p("toggleButton",l)}};return Pe(()=&gt;{x();const l=d=&gt;{const{buttonId:L,action:S}=d.detail;L==="toggleButton"&amp;&amp;S==="toggle"?(n.info("📺 Toggle button clicked in PiP window"),window.dispatchEvent(new CustomEvent("teleprompter-toggle-speech"))):L==="resetButton"&amp;&amp;S==="reset"&amp;&amp;(n.info("📺 Reset button clicked in PiP window"),window.dispatchEvent(new CustomEvent("teleprompter-reset")))};return window.addEventListener("teleprompter-button-sync",l),()=&gt;{window.removeEventListener("teleprompter-button-sync",l)}}),ge(()=&gt;{g()}),{isPiPSupported:v,isInPiP:f,pipWindow:u,openPiP:P,closePiP:g,togglePiP:b,syncPiPContent:t,syncScrollPosition:h,syncButtonStates:r,checkPiPSupport:x,restoreTeleprompterToMain:N}},xt={class:"teleprompter-main-container"},Ct={key:0,class:"browser-warning"},Lt={class:"teleprompter-panel"},At={class:"teleprompter-pip-wrapper"},Et={class:"teleprompter-section"},_t={class:"teleprompter-header"},It=["disabled"],kt={class:"teleprompter-controls-component"},Nt={class:"teleprompter-controls"},$t=["disabled"],Mt=["disabled"],Rt={class:"teleprompter-settings-inline"},Dt={class:"setting-column"},Ft=["value"],Wt={class:"setting-column"},zt=["value","max"],Bt={class:"setting-column"},Ot=["value"],Ht={key:0,class:"teleprompter-matched"},Ut={key:1,class:"teleprompter-highlight"},qt={key:2},Vt={class:"progress-bar"},jt={class:"teleprompter-section"},Kt={class:"teleprompter-settings"},Gt={class:"setting-group"},Jt=["value"],Yt={class:"teleprompter-section"},Qt={class:"speech-output"},Xt={key:0,class:"speech-placeholder"},Zt={key:1,class:"speech-content"},en={key:0,class:"final-transcript"},tn={key:1,class:"interim-transcript"},nn={key:2,class:"listening-indicator"},on={class:"teleprompter-section"},rn=["value"],an={class:"teleprompter-section"},sn={class:"setting-row",style:{"margin-bottom":"15px"}},ln={class:"setting-column"},cn={class:"radio-group"},un={class:"radio-option"},dn={class:"radio-option"},pn={class:"radio-option"},gn={class:"radio-option"},hn=le({__name:"TeleprompterView",setup(n){const e=me(),a=be(),{syncState:i,syncButtonClick:p}=Ee(),{isPiPSupported:u,isInPiP:v,pipWindow:f,togglePiP:x,syncPiPContent:k,syncScrollPosition:N,syncButtonStates:$}=Tt(),P=bt({onSave:s=&gt;{e.info("Settings saved to localStorage"),a.updateSettings(s),i()}}),g=Pt({onPositionChange:s=&gt;{e.info(`Position changed: ${s}`),a.updatePosition(s),i(),J(()=&gt;{O(),k(),v.value&amp;&amp;f.value&amp;&amp;!f.value.closed&amp;&amp;N()})},onProgressChange:s=&gt;{e.info(`Progress: ${s}%`)}}),y=wt({onMatchFound:s=&gt;{e.info(`Match found at position ${s.newPosition}`),g.updatePosition(s.newPosition,s.matchedIndices)},logger:{info:e.info,debug:e.debug,error:e.error}}),b=St({onResult:s=&gt;{e.info(`Speech result: ${s.newFinalWords.join(" ")}`),Re(s)},onStatusChange:s=&gt;{e.info(`Speech status: ${s.status}`),De(s),a.updateSpeechState(s.status==="listening",s.status),i(),$()}}),h=m(!1),t=m("en-US"),r=m(""),l=m(""),d=m("debug"),L=m(null),S=m(null),T=m(null),E=m(0),z=m(0),R=()=&gt;{if(v.value&amp;&amp;f.value&amp;&amp;!f.value.closed)return f.value.document.querySelector(".teleprompter-text");const s=document.querySelector(".teleprompter-pip-wrapper");return s?s.querySelector(".teleprompter-text"):L.value},U=()=&gt;{const s=document.querySelector(".teleprompter-pip-wrapper");return s?s.querySelector(".teleprompter-text"):L.value},A=()=&gt;{const s=U();if(!s){e.debug("📏 updateFirstLineCoordinates: No teleprompter text element found");return}const o=s.querySelector("span");if(!o)return;const w=o.getBoundingClientRect(),W=s.getBoundingClientRect();S.value=w.top-W.top+w.height/2;const q=s.querySelectorAll("span");let oe=!1;for(let de=1;de&lt;q.length;de++){const ee=q[de].getBoundingClientRect().top-w.top;if(ee&gt;10){T.value=ee,oe=!0;break}}oe||(T.value=parseInt(String(B.value.textSize))*1.6),e.debug(`📏 First line coordinates updated: middleY=${S.value?.toFixed(2)??"null"}, lineHeight=${T.value?.toFixed(2)??"null"}`)},O=()=&gt;{const s=R();if(!s)return;if((S.value===null||T.value===null)&amp;&amp;(e.debug("🔄 Auto-scroll: First line coordinates not available, updating..."),A(),S.value===null||T.value===null)){e.debug("🔄 Auto-scroll: Failed to get first line coordinates");return}const o=s.querySelector(".teleprompter-highlight");if(!o){e.debug("🔄 Auto-scroll: No highlighted word element found");return}e.debug(`🔄 Auto-scroll: Found highlighted element: "${o.textContent}"`);const w=o.getBoundingClientRect(),W=s.getBoundingClientRect(),q=w.top-W.top+w.height/2,oe=q-S.value,re=Math.floor(oe/(T.value-1))+1;if(e.debug(`🔄 Auto-scroll: Coordinates - firstLineMiddleY=${S.value.toFixed(2)}, currentWordMiddleY=${q.toFixed(2)}, lineDifference=${oe.toFixed(2)}, lineHeight=${T.value.toFixed(2)}, currentLine=${re}`),re&gt;B.value.scrollTrigger){const ae=q-S.value;e.debug(`📜 Auto-scroll triggered! currentLine=${re}, scrollTrigger=${B.value.scrollTrigger}, scrollDistance=${ae.toFixed(2)}`),E.value+=1;const ee=s.scrollTop,Fe=ee+ae,We=300,ze=performance.now();e.debug(`🎬 Starting smooth scroll: ${ee.toFixed(2)} → ${Fe.toFixed(2)} (distance: ${ae.toFixed(2)}px)`);const xe=Be=&gt;{const Oe=Be-ze,Ce=Math.min(Oe/We,1),He=1-Math.pow(1-Ce,3),Le=ee+ae*He;s.scrollTop=Le,z.value=Le,Ce&lt;1?requestAnimationFrame(xe):e.debug(`🎬 Smooth scroll completed: final scrollTop=${s.scrollTop.toFixed(2)}`)};requestAnimationFrame(xe)}else e.debug(`🔄 Auto-scroll: No scroll needed (currentLine=${re} &lt;= scrollTrigger=${B.value.scrollTrigger})`)},H=I(()=&gt;ht),Y=I(()=&gt;r.value.length&gt;0||l.value.length&gt;0),j=I(()=&gt;g.progress.value),X=I(()=&gt;g.scriptText.value),Z=I(()=&gt;g.currentPosition.value),B=I(()=&gt;({...g.settings.value})),C=I(()=&gt;b.isSupported.value),_=I(()=&gt;{const s=g.displayedWords.value,o=Z.value;return o&lt;=0?"":s.slice(0,o).join(" ")+" "}),Q=I(()=&gt;{const s=g.displayedWords.value,o=Z.value;return o&gt;=s.length?"":s[o]||""}),ne=I(()=&gt;{const s=g.displayedWords.value,o=Z.value;return o&gt;=s.length-1?"":" "+s.slice(o+1).join(" ")}),ve=I(()=&gt;{const s=B.value.linesToShow,o=B.value.textSize;return`${s*o*1.6+30}px`});Pe(()=&gt;{const s=P.getSavedSettings();g.updateScript(s.scriptText),g.updateSettings({linesToShow:s.linesToShow,scrollTrigger:s.scrollTrigger,textSize:s.textSize}),t.value=s.primaryLanguage,b.setLanguages(s.primaryLanguage);const o=window.localStorage.getItem("teleprompter_logLevel");o&amp;&amp;["off","error","info","debug"].includes(o)&amp;&amp;(d.value=o,e.setLogLevel(o)),J(()=&gt;{A()});const w=()=&gt;{ce()},W=()=&gt;{ue()};return window.addEventListener("teleprompter-toggle-speech",w),window.addEventListener("teleprompter-reset",W),()=&gt;{window.removeEventListener("teleprompter-toggle-speech",w),window.removeEventListener("teleprompter-reset",W)}}),Ae(()=&gt;({scriptText:g.scriptText.value,linesToShow:g.settings.value.linesToShow,scrollTrigger:g.settings.value.scrollTrigger,textSize:g.settings.value.textSize,primaryLanguage:t.value}),s=&gt;{P.saveSettings(s),J(()=&gt;{A()})},{deep:!0}),Ae(d,s=&gt;{e.setLogLevel(s),window.localStorage.setItem("teleprompter_logLevel",s)});const ce=()=&gt;{h.value?b.stop():b.start(),p("toggleButton",h.value?"stop":"start")},ue=()=&gt;{b.reset(),g.reset(),y.reset(),r.value="",l.value="",a.reset(),E.value=0,z.value=0;const s=R();s&amp;&amp;s.scrollTo({top:0,behavior:"smooth"}),i(),p("resetButton","reset"),e.info("Speech recognition and teleprompter reset")},_e=async()=&gt;{try{await x(),e.info(`PiP toggled: ${v.value?"opened":"closed"}`),v.value?(await J(),A(),O()):(await J(),A())}catch(s){e.error(`Failed to toggle PiP: ${s}`)}},Ie=s=&gt;{const w=s.target.value;t.value=w,b.setLanguages(w)},ke=s=&gt;{const o=s.target;g.updateScript(o.value),a.updateScript(o.value),i()},Ne=s=&gt;{const o=s.target,w=parseInt(o.value,10),W=B.value.scrollTrigger;let q=W;W&gt;=w&amp;&amp;(q=Math.max(1,w-1)),g.updateSettings({linesToShow:w,scrollTrigger:q})},$e=s=&gt;{const o=s.target;let w=parseInt(o.value,10);const W=B.value.linesToShow;w&lt;1?w=1:w&gt;=W&amp;&amp;(w=W-1),w!==parseInt(o.value,10)&amp;&amp;(o.value=w.toString()),g.updateSettings({scrollTrigger:w})},Me=s=&gt;{const o=s.target,w=parseInt(o.value,10);g.updateSettings({textSize:w}),J(()=&gt;{A()})},Re=async s=&gt;{if(r.value=b.finalTranscript.value,l.value=s.speechOutputHTML.includes('&lt;span class="teleprompter-interim"&gt;')?s.speechOutputHTML.split('&lt;span class="teleprompter-interim"&gt;')[1].split("&lt;/span&gt;")[0]:"",s.newFinalWords.length&gt;0){const o=g.getOriginalScriptWords(),w=g.getCurrentPosition();await y.processSpokenWords(s.newFinalWords,o,w)}},De=s=&gt;{if(h.value=s.status==="listening",s.status==="stopped"&amp;&amp;r.value.length&gt;0){const o=r.value.trim().split(/\s+/).filter(w=&gt;w.length&gt;0);if(o.length&gt;0){e.info(`Processing final speech output: ${o.join(" ")}`);const w=g.getOriginalScriptWords(),W=g.getCurrentPosition();e.debug(`📝 Script words: ${w.slice(0,10).join(" ")}... (${w.length} total)`),e.debug(`📍 Current position: ${W}`),y.processSpokenWords(o,w,W)}}};return(s,o)=&gt;(F(),D("div",xt,[o[25]||(o[25]=c("h1",null,"🎤 Speech Teleprompter",-1)),C.value?K("",!0):(F(),D("div",Ct,[...o[5]||(o[5]=[Ke('&lt;div class="warning-content" data-v-a138f19d&gt;&lt;h3 data-v-a138f19d&gt;⚠️ Browser Compatibility Notice&lt;/h3&gt;&lt;p data-v-a138f19d&gt; Your browser doesn&amp;#39;t support Web Speech API. Speech recognition features are disabled. &lt;/p&gt;&lt;p data-v-a138f19d&gt;&lt;strong data-v-a138f19d&gt;Supported browsers (MDN):&lt;/strong&gt;&lt;/p&gt;&lt;ul data-v-a138f19d&gt;&lt;li data-v-a138f19d&gt;✅ Google Chrome (full support)&lt;/li&gt;&lt;li data-v-a138f19d&gt;✅ Microsoft Edge - Chromium-based (full support)&lt;/li&gt;&lt;li data-v-a138f19d&gt;⚠️ Safari (partial support)&lt;/li&gt;&lt;li data-v-a138f19d&gt;❌ Opera, Firefox, IE (not supported)&lt;/li&gt;&lt;/ul&gt;&lt;p data-v-a138f19d&gt;&lt;strong data-v-a138f19d&gt;Note:&lt;/strong&gt; Web Speech API is not a Baseline feature and has limited browser availability. &lt;/p&gt;&lt;p data-v-a138f19d&gt; The teleprompter will work in manual mode - you can still edit scripts and use all other features. &lt;/p&gt;&lt;/div&gt;',1)])])),c("div",Lt,[c("div",At,[c("div",Et,[c("div",_t,[o[6]||(o[6]=c("h3",null,"📺 Teleprompter Display",-1)),c("button",{id:"pip-button",class:"pip-button",disabled:!ye(u),onClick:_e,"aria-label":"Toggle Picture-in-Picture mode"}," 📺 PiP ",8,It)]),c("div",kt,[c("div",Nt,[c("button",{class:we(["teleprompter-start-button",{listening:h.value,disabled:!C.value}]),disabled:!C.value,onClick:ce},V(h.value?"Stop":"Start"),11,$t),c("button",{class:we(["teleprompter-reset-button",{disabled:!C.value}]),disabled:!C.value,onClick:ue}," Reset ",10,Mt)]),c("div",Rt,[c("div",Dt,[o[7]||(o[7]=c("label",{for:"linesToShow"},"Lines to Show",-1)),c("input",{type:"number",id:"linesToShow",value:B.value.linesToShow,onInput:Ne,min:"3",max:"10"},null,40,Ft)]),c("div",Wt,[o[8]||(o[8]=c("label",{for:"scrollTrigger"},"Scroll After Lines",-1)),c("input",{type:"number",id:"scrollTrigger",value:B.value.scrollTrigger,onInput:$e,min:1,max:B.value.linesToShow-1},null,40,zt)]),c("div",Bt,[o[9]||(o[9]=c("label",{for:"textSize"},"Text Size (px)",-1)),c("input",{type:"number",id:"textSize",value:B.value.textSize,onInput:Me,min:"12",max:"48"},null,40,Ot)])])]),c("div",{class:"teleprompter-display",style:ie({height:ve.value})},[c("div",{ref_key:"teleprompterTextRef",ref:L,class:"teleprompter-text",style:ie({fontSize:B.value.textSize+"px"})},[_.value?(F(),D("span",Ht,V(_.value),1)):K("",!0),Q.value?(F(),D("span",Ut,V(Q.value),1)):K("",!0),ne.value?(F(),D("span",qt,V(ne.value),1)):K("",!0)],4)],4),te(ft,{"current-attachment":ye(g).attachmentManager.currentAttachment.value,"text-size":B.value.textSize},null,8,["current-attachment","text-size"]),c("div",Vt,[c("div",{class:"progress-fill",style:ie({width:j.value+"%"})},null,4)])])]),c("div",jt,[o[11]||(o[11]=c("h3",null,"🌍 Language Settings",-1)),c("div",Kt,[c("div",Gt,[o[10]||(o[10]=c("label",{for:"primaryLanguage"},"Primary Language:",-1)),se(c("select",{id:"primaryLanguage",class:"language-select","onUpdate:modelValue":o[0]||(o[0]=w=&gt;t.value=w),onChange:Ie},[(F(!0),D(Je,null,Ye(H.value,w=&gt;(F(),D("option",{key:w.code,value:w.code},V(w.name),9,Jt))),128))],544),[[Ge,t.value]])])]),o[12]||(o[12]=c("div",{class:"language-info"},[c("p",null,[c("strong",null,"Language Selection:"),G(" Choose your primary language for speech recognition. ")])],-1))]),c("div",Yt,[o[16]||(o[16]=c("h3",null,"🎤 Speech Output",-1)),c("div",Qt,[!h.value&amp;&amp;!Y.value?(F(),D("div",Xt,' Click "Start" to begin speech recognition... ')):(F(),D("div",Zt,[r.value?(F(),D("div",en,[o[13]||(o[13]=c("strong",null,"Final:",-1)),G(" "+V(r.value),1)])):K("",!0),l.value?(F(),D("div",tn,[o[14]||(o[14]=c("strong",null,"Interim:",-1)),G(" "+V(l.value),1)])):K("",!0),h.value?(F(),D("div",nn,[...o[15]||(o[15]=[c("span",{class:"listening-dot"},null,-1),G(" Listening... ",-1)])])):K("",!0)]))])]),c("div",on,[o[17]||(o[17]=c("h3",null,"📝 Script Text",-1)),c("textarea",{id:"scriptText",placeholder:"Enter your teleprompter script here...",value:X.value,onInput:ke},`Welcome to our presentation. Today we will be discussing the future of technology and how it impacts our daily lives. Let me start by sharing some interesting statistics about digital transformation in various industries.</span>
+<span class="cstat-no" title="statement not covered" >        `,40,rn)]),c("div",an,[o[23]||(o[23]=c("h3",null,"🐛 Debug Log",-1)),c("div",sn,[c("div",ln,[o[22]||(o[22]=c("label",null,"Log Level",-1)),c("div",cn,[c("label",un,[se(c("input",{type:"radio",name:"logLevel",value:"off","onUpdate:modelValue":o[1]||(o[1]=w=&gt;d.value=w)},null,512),[[pe,d.value]]),o[18]||(o[18]=c("span",null,"Off",-1))]),c("label",dn,[se(c("input",{type:"radio",name:"logLevel",value:"error","onUpdate:modelValue":o[2]||(o[2]=w=&gt;d.value=w)},null,512),[[pe,d.value]]),o[19]||(o[19]=c("span",null,"Error",-1))]),c("label",pn,[se(c("input",{type:"radio",name:"logLevel",value:"info","onUpdate:modelValue":o[3]||(o[3]=w=&gt;d.value=w)},null,512),[[pe,d.value]]),o[20]||(o[20]=c("span",null,"Info",-1))]),c("label",gn,[se(c("input",{type:"radio",name:"logLevel",value:"debug","onUpdate:modelValue":o[4]||(o[4]=w=&gt;d.value=w)},null,512),[[pe,d.value]]),o[21]||(o[21]=c("span",null,"Debug",-1))])])])]),o[24]||(o[24]=c("p",null,[G(" Logs are displayed in the browser's developer console."),c("br"),G(" Open DevTools and view logs in the Console tab. ")],-1))])])]))}}),mn=he(hn,[["__scopeId","data-v-a138f19d"]]),vn=Qe({history:Xe("/speech-teleprompter/"),routes:[{path:"/",name:"teleprompter",component:mn}]}),Te=Ze(gt);Te.use(et());Te.use(vn);Te.mount("#app");</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-09-26T19:58:08.707Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    
